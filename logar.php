@@ -20,7 +20,7 @@ if ($retornoBanco) {
         $_SESSION['usuario'] = $arrayRetorno['usuario'];
         $_SESSION['tipo'] = $arrayRetorno['tipo'];
 
-        
+        header("Location: indexlogado.php");
     }else{
         header("Location: index.php");
     }
