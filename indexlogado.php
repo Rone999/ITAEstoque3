@@ -27,7 +27,7 @@ function preencherTabela() {
                         <td>$nome</td>
                         <td>
                         <button type=\"button\" class=\"btn btn-secondary\">
-                            <a href=\"apagar_cliente.php?id=$id\" onclick=\"confirm('TEM CERTEZA QUE DESEJA EXCLUIR?')\"><img width=\"20\" height=\"20\" src=\"imgs/delete.png\"></a>
+                            <a href=\"apagar_cliente.php?id=$id\" onclick=\" return confirm('TEM CERTEZA QUE DESEJA EXCLUIR?')\"><img width=\"20\" height=\"20\" src=\"imgs/delete.png\"></a>
                         </button>
                         /
                         <button type=\"button\" class=\"btn btn-secondary\">
