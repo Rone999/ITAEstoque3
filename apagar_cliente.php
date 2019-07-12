@@ -9,7 +9,7 @@ if (isset($_SESSION['id'])) {
 
     $id = $_GET['id'];
     
-    $query = "DELETE FROM `teste` WHERE id = '$id';";
+    $query = "DELETE FROM `clientes` WHERE id = '$id';";
 
     mysqli_query($link, $query);
     

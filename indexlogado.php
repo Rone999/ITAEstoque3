@@ -14,17 +14,25 @@ if (!isset($_SESSION['indexPaginaCliente'])) {
 function preencherTabela() {
     $link = conecxao::conectar();
 
-    $query = "SELECT * FROM `teste` LIMIT 10 OFFSET " . $_SESSION['indexLimitCliente'] . ";";
+    $query = "SELECT id,tipo,nome_razao_social, cpf_cnpj,rg_inscricao_social,cidade FROM `clientes` LIMIT 10 OFFSET " . $_SESSION['indexLimitCliente'] . ";";
 
     $retornoBanco = mysqli_query($link, $query);
 
     while ($linha = mysqli_fetch_array($retornoBanco, MYSQLI_ASSOC)) {
         $id = $linha['id'];
-        $nome = $linha['NOME'];
+        $nome = $linha['nome_razao_social'];
+        $tipo = $linha['tipo'];
+        $cpf = $linha['cpf_cnpj'];
+        $rg = $linha['rg_inscricao_social'];
+        $cidade = $linha['cidade'];
 
         echo "<tr>
                         <th scope=\"row\">$id</th>
+                        <td>$tipo</td>
                         <td>$nome</td>
+                        <td>$cpf</td>
+                        <td>$rg</td>
+                        <td>$cidade</td>
                         <td>
                         <button type=\"button\" class=\"btn btn-secondary\">
                             <a href=\"apagar_cliente.php?id=$id\" onclick=\" return confirm('TEM CERTEZA QUE DESEJA EXCLUIR?')\"><img width=\"20\" height=\"20\" src=\"imgs/delete.png\"></a>
@@ -53,17 +61,17 @@ function preencherTabela() {
         <script src="js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    
-        
-            <script>
-                function alertar(){
-                    if(confirm("Tem certeza?")){
-                        
-                    }
+
+
+        <script>
+            function alertar() {
+                if (confirm("Tem certeza?")) {
+
                 }
-                
-            </script>
-    
+            }
+
+        </script>
+
     </head>
     <body>
         <nav class="navbar navbar-light bg-light">
@@ -96,7 +104,11 @@ function preencherTabela() {
                                 <thead>
                                     <tr>
                                         <th scope="col">ID</th>
-                                        <th scope="col">NOME</th>
+                                        <th scope="col">TIPO</th>
+                                        <th scope="col">NOME/RAZÃO SUCIAL</th>
+                                        <th scope="col">NCPF/CNPJ</th>
+                                        <th scope="col">RG/IS</th>
+                                        <th scope="col">CIDADE</th>
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
@@ -127,16 +139,16 @@ function preencherTabela() {
                         </div>
                         <!-- buttons de clientes-->
                         <div class="col-2">
-                            <button onclick="alertar()" type="button" class="btn btn-primary btn-sm btn-block">Cadastrar</button>
-                            <div class="dropdown-divider"></div>
-                            <button type="button" class="btn btn-primary btn-sm btn-block">Historico de Emprestimo</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-block">Emprestimo</button>
-                            <div class="dropdown-divider"></div>
-                            <button type="button" class="btn btn-primary btn-sm btn-block">Historico pagamento</button>
-                            <button type="button" class="btn btn-primary btn-sm btn-block">Pagamentos</button>
-                            <div class="dropdown-divider"></div>
-                            <button type="button" class="btn btn-primary btn-sm btn-block">Historico meus pagamentos</button>
-                            <button type="button" class="btn btn-success btn-sm btn-block">Pagar</button>
+                            <a href="cadastrarcliente.php"><button type="button" class="btn btn-primary btn-sm btn-block">Cadastrar</button></a>
+                                <div class="dropdown-divider"></div>
+                                <button type="button" class="btn btn-primary btn-sm btn-block">Historico de Emprestimo</button>
+                                <button type="button" class="btn btn-primary btn-sm btn-block">Emprestimo</button>
+                                <div class="dropdown-divider"></div>
+                                <button type="button" class="btn btn-primary btn-sm btn-block">Historico pagamento</button>
+                                <button type="button" class="btn btn-primary btn-sm btn-block">Pagamentos</button>
+                                <div class="dropdown-divider"></div>
+                                <button type="button" class="btn btn-primary btn-sm btn-block">Historico meus pagamentos</button>
+                                <button type="button" class="btn btn-success btn-sm btn-block">Pagar</button>
                         </div>
                     </div>
 

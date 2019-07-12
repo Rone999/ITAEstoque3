@@ -6,7 +6,7 @@ if(isset($_SESSION['id'])){
     
     $link = conecxao::conectar();
     
-    $query = "SELECT COUNT(*) FROM teste;";
+    $query = "SELECT COUNT(*) FROM `clientes`;";
     
     $retornoBanco = mysqli_query($link, $query);
     
