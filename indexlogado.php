@@ -34,16 +34,12 @@ function preencherTabela() {
                         <td>$rg</td>
                         <td>$cidade</td>
                         <td>
-                        <a href=\"apagar_cliente.php?id=$id\" onclick=\" return confirm('TEM CERTEZA QUE DESEJA EXCLUIR?')\">
-                            <button type=\"button\" class=\"btn btn-secondary\">
-                              <img width=\"20\" height=\"20\" src=\"imgs/delete.png\">
-                            </button>
+                        <a class=\"btn btn-primary rounded-pill\" role =\"button\" href=\"apagar_cliente.php?id=$id\" onclick=\" return confirm('TEM CERTEZA QUE DESEJA EXCLUIR?')\">
+                            <img width=\"20\" height=\"20\" src=\"imgs/delete.png\">
                         </a>
                         |
-                        <a href=\"#\">
-                            <button type=\"button\" class=\"btn btn-secondary\">
-                                <img width=\"20\" height=\"20\" src=\"imgs/edit.png\">
-                            </button>
+                        <a class=\"btn btn-warning rounded-pill\" role =\"button\" href=\"#\">
+                            <img width=\"20\" height=\"20\" src=\"imgs/edit.png\">
                          </a>
                          </td>
                       </tr>";
@@ -84,7 +80,7 @@ function preencherTabela() {
     <body>
         <nav class="navbar navbar-light bg-light fixed-top">
             <a class="navbar-brand" href="#">
-                <img src="imgs/nome.png" width="120" height="40" alt="">
+                <img src="imgs/nome.png" width="200" height="40" alt="">
             </a>
         </nav>
         <br><br><br><br>

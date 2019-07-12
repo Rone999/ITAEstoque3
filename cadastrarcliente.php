@@ -107,7 +107,7 @@
     <body>
         <nav class="navbar navbar-light bg-light fixed-top">
             <a class="navbar-brand" href="indexlogado.php">
-                <img src="imgs/nome.png" width="120" height="40" alt="">
+                <img src="imgs/nome.png" width="200" height="40" alt="">
             </a>
         </nav>
         <br><br><br><br>
