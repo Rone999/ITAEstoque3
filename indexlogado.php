@@ -34,13 +34,17 @@ function preencherTabela() {
                         <td>$rg</td>
                         <td>$cidade</td>
                         <td>
-                        <button type=\"button\" class=\"btn btn-secondary\">
-                            <a href=\"apagar_cliente.php?id=$id\" onclick=\" return confirm('TEM CERTEZA QUE DESEJA EXCLUIR?')\"><img width=\"20\" height=\"20\" src=\"imgs/delete.png\"></a>
-                        </button>
-                        /
-                        <button type=\"button\" class=\"btn btn-secondary\">
-                            <a href=\"#\"><img width=\"20\" height=\"20\" src=\"imgs/edit.png\"></a>
-                         </button>
+                        <a href=\"apagar_cliente.php?id=$id\" onclick=\" return confirm('TEM CERTEZA QUE DESEJA EXCLUIR?')\">
+                            <button type=\"button\" class=\"btn btn-secondary\">
+                              <img width=\"20\" height=\"20\" src=\"imgs/delete.png\">
+                            </button>
+                        </a>
+                        |
+                        <a href=\"#\">
+                            <button type=\"button\" class=\"btn btn-secondary\">
+                                <img width=\"20\" height=\"20\" src=\"imgs/edit.png\">
+                            </button>
+                         </a>
                          </td>
                       </tr>";
     }
@@ -62,6 +66,10 @@ function preencherTabela() {
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 
+        <style type="text/css"> 
+            .tira_linha.nounderline:link 
+            { 
+        </style>
 
         <script>
             function alertar() {
@@ -74,12 +82,12 @@ function preencherTabela() {
 
     </head>
     <body>
-        <nav class="navbar navbar-light bg-light">
+        <nav class="navbar navbar-light bg-light fixed-top">
             <a class="navbar-brand" href="#">
                 <img src="imgs/nome.png" width="120" height="40" alt="">
             </a>
         </nav>
-        <br><br>
+        <br><br><br><br>
         <!-- Abas de conteudo-->
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">

@@ -13,7 +13,6 @@
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
         
         <script type="text/javascript">
-
             jQuery(function ($) {
                 $('#cepCliente').mask('00000-000');
                 $('#cepClienteJ').mask('00000-000');
@@ -32,7 +31,7 @@
 
             });
             
-            function caracteresAgencia(evt) {
+            function caracteresNumeros(evt) {
                 var theEvent = evt || window.event;
                 var key = theEvent.keyCode || theEvent.which;
                 key = String.fromCharCode(key);
@@ -106,12 +105,12 @@
 
     </head>
     <body>
-        <nav class="navbar navbar-light bg-light">
-            <a class="navbar-brand" href="#">
+        <nav class="navbar navbar-light bg-light fixed-top">
+            <a class="navbar-brand" href="indexlogado.php">
                 <img src="imgs/nome.png" width="120" height="40" alt="">
             </a>
         </nav>
-        <br><br>
+        <br><br><br><br>
         <div class="container">
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item">
@@ -125,7 +124,12 @@
                 <!-- conteudo pessoa fisica -->
                 <div class="tab-pane fade show active" id="pills-pessoafisica" role="tabpanel" aria-labelledby="pills-pessoafisica-tab">
                     <div class="container">
-                        <form>
+                        <form method="post" action="cadastrar_cleinte.php">
+                            <input id="tipoC" name="tipoCliente" type="text" value="PF">
+                            <script>
+                                $('#tipoC').hide();
+                            </script>
+                            
                             <div>
                                 <h2>Cadastrar Cliente</h2>
                             </div>
@@ -152,7 +156,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-4">
                                     <label for="inputState">Estado</label>
-                                    <select name="estado" class="custom-select custom-select-sm">
+                                    <select name="estado" class="custom-select custom-select-md">
                                         <option value="">Selecione</option>
                                         <option value="AC">AC</option>
                                         <option value="AL">AL</option>
@@ -230,21 +234,29 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="inputAgencia">Agencia</label>
-                                    <input name="agencia" onkeypress="return caracteresAgencia()" type="text" class="form-control" id="inputAgencia" placeholder="Digite sua Cidade">
+                                    <input name="agencia" onkeypress="return caracteresNumeros()" type="text" class="form-control" id="inputAgencia" placeholder="Digite sua Cidade">
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <label for="inputState">C/C</label>
-                                    <select name="tipoConta" onchange="mudarTipoContaFisica()" class="custom-select custom-select-sm">
+                                <div class="form-group col-md-2">
+                                    <label for="inputState">Tipo</label>
+                                    <select name="tipoConta" class="custom-select custom-select-md">
                                         <option selected>SELECIONE</option>
                                         <option value="CC">C/C</option>
                                         <option value="CP">C/P</option>
                                     </select>
+                                    
+                                    
+                                </div>
+                                
+                                <div class="form-group col-md-4">
+                                    <label for="inputState">Conta</label>
+                                    <input name="numeroConta" onkeypress="return caracteresNumeros()" type="text" class="form-control" id="inputagencia" placeholder="Conta">
+                                    
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-4">
                                     <label for="inputState">Pessoa fisca ou juridica</label>
-                                    <select onchange="mudarTipoContaFisica()" id="tipoContaPessoa" class="custom-select custom-select-sm">
+                                    <select onchange="mudarTipoContaFisica()" id="tipoContaPessoa" class="custom-select custom-select-md">
                                         <option value="1">Pessoa fisica</option>
                                         <option value="2">Pessoa juridica</option>
                                     </select>
@@ -262,7 +274,12 @@
                 <!-- conteudo pessoa juridica -->
                 <div class="tab-pane fade" id="pills-pessoajuridica" role="tabpanel" aria-labelledby="pills-pessoajuridica-tab">
                     <div class="container">
-                        <form>
+                        <form method="post" action="cadastrar_cleinte.php">
+                            <input id="tipoC2" name="tipoCliente" type="text" value="PJ">
+                            <script>
+                                $('#tipoC2').hide();
+                            </script>
+                            
                             <div>
                                 <h2>Cadastrar Cliente</h2>
                             </div>
@@ -274,7 +291,7 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md">
-                                    <label for="cnpjCliente">CNPJ</label>
+                                    <label id="labelCpfCnpj" for="cnpjCliente">CNPJ</label>
                                     <input name="cpfCnpj" type="text" class="form-control" id="cnpjCliente" placeholder="CNPJ">
                                 </div>
                                 <div class="form-group col-md">
@@ -289,7 +306,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-4">
                                     <label for="inputState">Estado</label>
-                                    <select name="estado" class="custom-select custom-select-sm">
+                                    <select name="estado" class="custom-select custom-select-md">
                                         <option value="">Selecione</option>
                                         <option value="AC">AC</option>
                                         <option value="AL">AL</option>
@@ -367,21 +384,29 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="inputagencia">Agencia</label>
-                                    <input name="agencia" onkeypress="return caracteresAgencia()" type="text" class="form-control" id="inputagencia" placeholder="Digite sua Cidade">
+                                    <input name="agencia" onkeypress="return caracteresNumeros()" type="text" class="form-control" id="inputagencia" placeholder="Conta">
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <label for="inputState">C/C</label>
-                                    <select name="tipoConta" class="custom-select custom-select-sm">
+                                <div class="form-group col-md-2">
+                                    <label for="inputState">Tipo</label>
+                                    <select name="tipoConta" class="custom-select custom-select-md">
                                         <option selected>SELECIONE</option>
                                         <option value="CC">C/C</option>
                                         <option value="CP">C/P</option>
                                     </select>
+                                    
+                                    
+                                </div>
+                                
+                                <div class="form-group col-md-4">
+                                    <label for="inputState">Conta</label>
+                                    <input name="numeroConta" onkeypress="return caracteresNumeros()" type="text" class="form-control" id="inputagencia" placeholder="Digite sua Cidade">
+                                    
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-4">
                                     <label for="inputState">Pessoa fisca ou juridica</label>
-                                    <select id="tipoContaPessoaJ" onchange="mudarTipoContaJuridica()" class="custom-select custom-select-sm">
+                                    <select id="tipoContaPessoaJ" onchange="mudarTipoContaJuridica()" class="custom-select custom-select-md">
                                         <option value="1">Pessoa fisica</option>
                                         <option value="2">Pessoa juridica</option>
                                     </select>
