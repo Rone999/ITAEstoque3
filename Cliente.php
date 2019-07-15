@@ -58,6 +58,17 @@ class Cliente {
             echo 'Erro ao salvar o cleinte (Cliente.php):' . $query;
         }
     }
+    
+    public function editar($link){
+        $query = "UPDATE `clientes` SET `tipo` = '$this->tipo' , `nome_razao_social` = '$this->nome'  , `cpf_cnpj` = '$this->cpfCnpj'  , `rg_inscricao_social` = '$this->rgIs'  , `estado` = '$this->estado'  , `rua` = '$this->rua'  , `bairro` = '$this->bairro'  , `cep` = '$this->cep'  , `email` = '$this->email'  , `telefone1` = '$this->telefone1' 
+        , `telefone2` = '$this->telefone2'  , `banco` = '$this->banco'  , `titular` = '$this->titular'  , `agencia` = '$this->agencia'  , `numero_conta` = '$this->numConta'  , `cpf_cnpj_conta` = '$this->cpfCnpjConta'  , `cidade` = '$this->cidade',`tipo_conta` = '$this->tipoConta'  WHERE  `id` = '$this->id';";
+    
+        $retorno = mysqli_query($link, $query);
+        
+        if(!$retorno){
+            echo 'Erro ao salvar o cleinte (Cliente.php):' . $query;
+        }
+    }
 
     public function getId() {
         return $this->id;

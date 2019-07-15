@@ -6,6 +6,8 @@ require_once 'Cliente.php';
 session_start();
 
 if (isset($_SESSION['id'])) {
+    $id = $_POST['id'];
+    
     $tipo = $_POST['tipoCliente'];
     
     $nome = $_POST['nome'];
@@ -25,12 +27,19 @@ if (isset($_SESSION['id'])) {
      $tipoConta = $_POST['tipoConta'];
      $numConta = $_POST['numeroConta'];
      $cpfCnpjConta = $_POST['cpfCnpjConta'];
+     
     
     $link = conecxao::conectar();
     
-    $cliente = new Cliente(0, $tipo, $nome, $cpfCnpj, $rgIs, $cep, $estado, $cidade, $rua, $bairro, $email, $telefone1, $telefone2, $banco, $agencia, $titular, $tipoConta, $numConta, $cpfCnpjConta);
+    $cliente = new Cliente($id, $tipo, $nome, $cpfCnpj, $rgIs, $cep, $estado, $cidade, $rua, $bairro, $email, $telefone1, $telefone2, $banco, $agencia, $titular, $tipoConta, $numConta, $cpfCnpjConta);
     
-    $cliente->salvar($link);
+    if(empty($id)){
+        $cliente->salvar($link);
+    }else{
+        $cliente->editar($link);
+    }
+    
+    header("Location: indexlogado.php");
 
 }
 

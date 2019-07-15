@@ -38,7 +38,7 @@ function preencherTabela() {
                             <img width=\"20\" height=\"20\" src=\"imgs/delete.png\">
                         </a>
                         |
-                        <a class=\"btn btn-warning rounded-pill\" role =\"button\" href=\"#\">
+                        <a class=\"btn btn-warning rounded-pill\" role =\"button\" href=\"cadastrarcliente.php?id=$id\">
                             <img width=\"20\" height=\"20\" src=\"imgs/edit.png\">
                          </a>
                          </td>
@@ -100,10 +100,11 @@ function preencherTabela() {
             <!-- conteudo de clientes-->
             <div class="tab-pane fade show active" id="clientes" role="tabpanel" aria-labelledby="clientes-tab">
 
-                <form method="get" action="apagar_cliente.php">
+                
                     <div class="row col-12">
                         <!-- tabela de clientes-->
                         <div class="col-10">
+                            <form method="get" action="apagar_cliente.php">
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
@@ -121,7 +122,7 @@ function preencherTabela() {
                                 </tbody>
                             </table>
 
-
+                            </form>
                             <div>
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination">
@@ -156,7 +157,7 @@ function preencherTabela() {
                         </div>
                     </div>
 
-                </form>
+                
             </div>
             <!-- conteudo de fornecedores  -->
             <div class="tab-pane fade" id="fornecedores" role="tabpanel" aria-labelledby="fornecedores-tab">..FORNECEDORES.
