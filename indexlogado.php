@@ -90,9 +90,6 @@ function preencherTabela() {
                 <a class="nav-link active" id="clientes-tab" data-toggle="tab" href="#clientes" role="tab" aria-controls="clientes" aria-selected="true">CLIENTES</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="fornecedores-tab" data-toggle="tab" href="#fornecedores" role="tab" aria-controls="fornecedores" aria-selected="false">FORNECEDORES</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" id="produtos-tab" data-toggle="tab" href="#produtos" role="tab" aria-controls="produtos" aria-selected="false">PRODUTOS</a>
             </li>
         </ul>
@@ -159,13 +156,78 @@ function preencherTabela() {
 
                 
             </div>
-            <!-- conteudo de fornecedores  -->
-            <div class="tab-pane fade" id="fornecedores" role="tabpanel" aria-labelledby="fornecedores-tab">..FORNECEDORES.
-
-            </div>
             <!-- conteudo de produtos -->
             <div class="tab-pane fade" id="produtos" role="tabpanel" aria-labelledby="produtos-tab">.PRODUTOS..
+              <div class="row col-12">
+               <div class="col-10">
+                <form method="get" action="apagar_cliente.php">
+                  <table class="table table-striped">
+                     <thead>
+                        <tr>
+                          <th scope="col">ID</th>
+                          <th scope="col">NOME</th>
+                          <th scope="col">ESTOQUE</th>
+                          <th scope="col">VALOR DE VENDA</th>
+                        </tr>
+                     </thead>
+                        <tbody>
+                        <?php preencherTabela() ?>
+                        </tbody>
+                  </table>
+               </form>
+             </div>
+               <div class="col-2">
+                   <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Cadastar</button>
+                   <div class="dropdown-divider"></div>
+                   <button type="button" class="btn btn-primary btn-sm btn-block">Editar</button>
+                   <button type="button" class="btn btn-primary btn-sm btn-block">Excluir</button>
+                   <div class="dropdown-divider"></div>
+                   <button type="button" class="btn btn-primary btn-sm btn-block">Entrada</button>
+                   <button type="button" class="btn btn-primary btn-sm btn-block">Saida</button>
+                   <div class="dropdown-divider"></div>
+                   <button type="button" class="btn btn-primary btn-sm btn-block">Historico</button>
+                   <button type="button" class="btn btn-success btn-sm btn-block">emprimir</button>
+               </div>
+            </div>
+            <!-- modal inicil -->
 
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Cadastro de produto</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="form-group">
+                      <label for="recipient-name" class="col-form-label">Codigo</label>
+                      <input type="text" class="form-control" id="recipient-name">
+                    </div>
+                    <div class="form-group">
+                      <label for="recipient-name" class="col-form-label">Nome</label>
+                      <input type="text" class="form-control" id="recipient-name">
+                    </div>
+                    <div class="form-group">
+                      <label for="recipient-name" class="col-form-label">Quantidade no estoque</label>
+                      <input type="text" class="form-control" id="recipient-name">
+                    </div>
+                    <div class="form-group">
+                      <label for="recipient-name" class="col-form-label">Valor de venda R$</label>
+                      <input type="text" class="form-control" id="recipient-name">
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary">Cadastrar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+            <!-- modal fim -->
             </div>
         </div>
         <!-- Optional JavaScript -->
