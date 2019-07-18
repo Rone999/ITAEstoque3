@@ -1,3 +1,10 @@
+<?php 
+    session_start();
+    
+    $tipo = $_GET['tipo'];
+    
+?>
+
 <!doctype html>
 <html lang="pt-br">
     <head>
@@ -22,7 +29,7 @@
         <br><br><br><br>
               <div class="row col-12">
         <div class="col-10">
-            <h3>Entrada</h3>
+            <h3><?php echo $tipo ?></h3>
           <table class="table table-striped">
             <thead>
               <tr>
@@ -38,7 +45,7 @@
               </tr>
             </thead>
             <tbody>
-               <?php preencherTabela() ?>
+               <?php //preencherTabela() ?>
             </tbody>
           </table>
         </div>
@@ -55,14 +62,17 @@
           <table class="table table-striped">
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
+                <th scope="col">CÓDIGO</th>
+                <th scope="col">NOME</th>
+                <th scope="col">PESO</th>
+                <th scope="col">TARA</th>
+                <th scope="col">PESO LIQUIDO</th>
+                <th scope="col">PESO P. QUILO</th>
+                <th scope="col">VALOR FINAL</th>
               </tr>
             </thead>
             <tbody>
-              <?php preencherTabela() ?>
+              <?php //preencherTabela() ?>
             </tbody>
           </table>
         </div>

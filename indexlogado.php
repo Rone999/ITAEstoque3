@@ -142,6 +142,10 @@ function preencherTabelaClientes() {
                     
                     document.getElementById("idButaoProduto").innerHTML = nome;
                 }
+                
+                function clickEntradaSaida(tipo){
+                    window.location.href = "entradasaida.php?tipo="+tipo;
+                }
                
             </script>
     </head>
@@ -265,11 +269,8 @@ function preencherTabelaClientes() {
                <div class="col-2">
                    <button onclick="mudarNomeBotaoProduto('Cadastrar');" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Cadastar</button>
                    <div class="dropdown-divider"></div>
-                   <button type="button" class="btn btn-primary btn-sm btn-block">Editar</button>
-                   <button type="button" class="btn btn-primary btn-sm btn-block">Excluir</button>
-                   <div class="dropdown-divider"></div>
-                   <button type="button" class="btn btn-primary btn-sm btn-block">Entrada</button>
-                   <button type="button" class="btn btn-primary btn-sm btn-block">Saida</button>
+                   <button onclick="clickEntradaSaida('Entrada')" type="button" class="btn btn-primary btn-sm btn-block">Entrada</button>
+                   <button onclick="clickEntradaSaida('Saida')" type="button" class="btn btn-primary btn-sm btn-block">Saida</button>
                    <div class="dropdown-divider"></div>
                    <button type="button" class="btn btn-primary btn-sm btn-block">Historico</button>
                    <button type="button" class="btn btn-success btn-sm btn-block">emprimir</button>
