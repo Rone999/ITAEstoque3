@@ -22,13 +22,19 @@
         <br><br><br><br>
               <div class="row col-12">
         <div class="col-10">
+            <h3>Entrada</h3>
           <table class="table table-striped">
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
+                <th scope="col">ID</th>
+                <th scope="col">NOME/RAZÃOSOCIAL</th>
+                <th scope="col">PESOTOTAL</th>
+                <th scope="col">TARATOTAL</th>
+                <th scope="col">PESOLIQUIDO</th>
+                <th scope="col">VALORFINAL</th>
+                <th scope="col">ACRECIMO</th>
+                <th scope="col">DESCRIÇÃO</th>
+                <th scope="col">DATA</th>
               </tr>
             </thead>
             <tbody>
@@ -37,22 +43,15 @@
           </table>
         </div>
         <div class="col-2">
-          <button type="button" class="btn btn-primary btn-sm btn-block">Cadastrar</button>
-          <button type="button" class="btn btn-primary btn-sm btn-block">Editar</button>
-          <button type="button" class="btn btn-danger btn-sm btn-block">excluir</button>
+          <button type="button" class="btn btn-primary btn-sm btn-block">Registar entrada</button>
           <div class="dropdown-divider"></div>
-          <button type="button" class="btn btn-primary btn-sm btn-block">Historico de Emprestimo</button>
-          <button type="button" class="btn btn-primary btn-sm btn-block">Emprestimo</button>
-          <div class="dropdown-divider"></div>
-          <button type="button" class="btn btn-primary btn-sm btn-block">Historico pagamento</button>
-          <button type="button" class="btn btn-primary btn-sm btn-block">Pagamentos</button>
-          <div class="dropdown-divider"></div>
-          <button type="button" class="btn btn-primary btn-sm btn-block">Historico meus pagamentos</button>
-          <button type="button" class="btn btn-success btn-sm btn-block">Pagar</button>
+          <button type="button" class="btn btn-primary btn-sm btn-block">Impremir sem vinculados</button>
+          <button type="button" class="btn btn-danger btn-sm btn-block">Impremir com vinculados</button>
         </div>
       </div>
       <div class="row col-12">
          <div class="col-10">
+          <h3>Produtos vinculados</h3>
           <table class="table table-striped">
             <thead>
               <tr>
