@@ -66,7 +66,7 @@ class Cliente {
         $retorno = mysqli_query($link, $query);
         
         if(!$retorno){
-            echo 'Erro ao salvar o cleinte (Cliente.php):' . $query;
+            echo 'Erro ao editar o cleinte (Cliente.php):' . $query;
         }
     }
 

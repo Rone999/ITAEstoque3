@@ -39,7 +39,7 @@ if (isset($_SESSION['id'])) {
         $cliente->editar($link);
     }
     
-    header("Location: indexlogado.php");
+    header("Location: mudar_aba.php?id_aba=cliente");
 
 }
 

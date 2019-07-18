@@ -4,12 +4,12 @@
     $id = $_GET['id'];
     
     $query = "SELECT * FROM clientes WHERE id = '$id';";
-    
+
     $link = conecxao::conectar();
-    
+
     $retornoBanco = mysqli_query($link, $query);
-    
-    $arrayDadosBanco = mysqli_fetch_array($retornoBanco);
+
+    $arrayDadosBancoProduto = mysqli_fetch_array($retornoBanco);
 ?>
 
 <!doctype html>
@@ -182,7 +182,7 @@
                 <div class="tab-pane fade show active" id="pills-pessoafisica" role="tabpanel" aria-labelledby="pills-pessoafisica-tab">
                     <div class="container">
                         <form method="post" action="cadastrar_cleinte.php">
-                            <input id="idCliente" name="id" type="text" <?php echo "value= ".$arrayDadosBanco['id']."" ?>>
+                            <input id="idCliente" name="id" type="text" <?php echo "value= ".$arrayDadosBancoProduto['id']."" ?>>
                             <script>
                                 $('#idCliente').hide();
                             </script>
@@ -195,7 +195,7 @@
                                     <label for="tipoPessoa">TIPO</label>
                                     <select onchange="mudarTipoPessoa(1)" id="tipoPessoa" name="tipoCliente" class="custom-select custom-select-md">
                                         <option value="PF">PESSOA FÍSICA</option>
-                                        <option <?php if($arrayDadosBanco['tipo'] == 'PJ'){echo 'selected';} ?> value="PJ">PESSOA JURÍDICA</option>
+                                        <option <?php if($arrayDadosBancoProduto['tipo'] == 'PJ'){echo 'selected';} ?> value="PJ">PESSOA JURÍDICA</option>
                                     </select>
                                   
                                 </div>
@@ -203,21 +203,21 @@
                                 
                                 <div class="form-group col-md-10">
                                     <label id="teste1" for="inputNome4">Nome</label>
-                                    <input name="nome" type="text" class="form-control" id="inputNome4" placeholder="Nome" value="<?php echo $arrayDadosBanco['nome_razao_social']; ?>">
+                                    <input name="nome" type="text" class="form-control" id="inputNome4" placeholder="Nome" value="<?php echo $arrayDadosBancoProduto['nome_razao_social']; ?>">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md">
                                     <label id="cpfClienteL" for="cpfClienteI">CPF</label>
-                                    <input id="cpfClienteI" name="cpfCnpj" type="text" class="form-control" placeholder="CPF"  value="<?php echo $arrayDadosBanco['cpf_cnpj'];?>">
+                                    <input id="cpfClienteI" name="cpfCnpj" type="text" class="form-control" placeholder="CPF"  value="<?php echo $arrayDadosBancoProduto['cpf_cnpj'];?>">
                                 </div>
                                 <div class="form-group col-md">
                                     <label id="rgClienteL" for="rgClienteI">RG</label>
-                                    <input name="rgIs" onkeypress="return caracteresRgIs();" type="text" class="form-control" id="rgClienteI" placeholder="RG" value="<?php echo $arrayDadosBanco['rg_inscricao_social']; ?>">
+                                    <input name="rgIs" onkeypress="return caracteresRgIs();" type="text" class="form-control" id="rgClienteI" placeholder="RG" value="<?php echo $arrayDadosBancoProduto['rg_inscricao_social']; ?>">
                                 </div>
                                 <div class="form-group col-md">
                                     <label for="cepCliente">CEP</label>
-                                    <input name="cep" type="text" class="form-control cep" id="cepCliente" placeholder="CEP" value="<?php echo $arrayDadosBanco['cep']; ?>">
+                                    <input name="cep" type="text" class="form-control cep" id="cepCliente" placeholder="CEP" value="<?php echo $arrayDadosBancoProduto['cep']; ?>">
                                 </div>
                             </div>
                             <div class="form-row">
@@ -225,64 +225,64 @@
                                     <label for="inputState">Estado</label>
                                     <select name="estado" class="custom-select custom-select-md">
                                         <option value="">Selecione</option>
-                                        <option <?php if($arrayDadosBanco['estado'] == 'AC'){echo 'selected';} ?>  value="AC">AC</option>
-                                        <option <?php if($arrayDadosBanco['estado'] == 'AL'){echo 'selected';} ?> value="AL">AL</option>
-                                        <option <?php if($arrayDadosBanco['estado'] == 'AM'){echo 'selected';} ?> value="AM">AM</option>
-                                        <option <?php if($arrayDadosBanco['estado'] == 'AP'){echo 'selected';} ?> value="AP">AP</option>
-                                        <option <?php if($arrayDadosBanco['estado'] == 'BA'){echo 'selected';} ?> value="BA">BA</option>
-                                        <option <?php if($arrayDadosBanco['estado'] == 'CE'){echo 'selected';} ?> value="CE">CE</option>
-                                        <option <?php if($arrayDadosBanco['estado'] == 'DF'){echo 'selected';} ?> value="DF">DF</option>
-                                        <option <?php if($arrayDadosBanco['estado'] == 'ES'){echo 'selected';} ?> value="ES">ES</option>
-                                        <option <?php if($arrayDadosBanco['estado'] == 'GO'){echo 'selected';} ?> value="GO">GO</option>
-                                        <option <?php if($arrayDadosBanco['estado'] == 'MA'){echo 'selected';} ?> value="MA">MA</option>
-                                        <option <?php if($arrayDadosBanco['estado'] == 'MG'){echo 'selected';} ?> value="MG">MG</option>
-                                        <option <?php if($arrayDadosBanco['estado'] == 'MS'){echo 'selected';} ?> value="MS">MS</option>
-                                        <option <?php if($arrayDadosBanco['estado'] == 'MT'){echo 'selected';} ?> value="MT">MT</option>
-                                        <option <?php if($arrayDadosBanco['estado'] == 'PA'){echo 'selected';} ?> value="PA">PA</option>
-                                        <option <?php if($arrayDadosBanco['estado'] == 'PB'){echo 'selected';} ?> value="PB">PB</option>
-                                        <option <?php if($arrayDadosBanco['estado'] == 'PE'){echo 'selected';} ?> value="PE">PE</option>
-                                        <option <?php if($arrayDadosBanco['estado'] == 'PI'){echo 'selected';} ?> value="PI">PI</option>
-                                        <option <?php if($arrayDadosBanco['estado'] == 'PR'){echo 'selected';} ?> value="PR">PR</option>
-                                        <option <?php if($arrayDadosBanco['estado'] == 'RJ'){echo 'selected';} ?> value="RJ">RJ</option>
-                                        <option <?php if($arrayDadosBanco['estado'] == 'RN'){echo 'selected';} ?> value="RN">RN</option>
-                                        <option <?php if($arrayDadosBanco['estado'] == 'RS'){echo 'selected';} ?> value="RS">RS</option>
-                                        <option <?php if($arrayDadosBanco['estado'] == 'RO'){echo 'selected';} ?> value="RO">RO</option>
-                                        <option <?php if($arrayDadosBanco['estado'] == 'RR'){echo 'selected';} ?> value="RR">RR</option>
-                                        <option <?php if($arrayDadosBanco['estado'] == 'SC'){echo 'selected';} ?> value="SC">SC</option>
-                                        <option <?php if($arrayDadosBanco['estado'] == 'SE'){echo 'selected';} ?> value="SE">SE</option>
-                                        <option <?php if($arrayDadosBanco['estado'] == 'SP'){echo 'selected';} ?> value="SP">SP</option>
-                                        <option <?php if($arrayDadosBanco['estado'] == 'TO'){echo 'selected';} ?> value="TO">TO</option>
+                                        <option <?php if($arrayDadosBancoProduto['estado'] == 'AC'){echo 'selected';} ?>  value="AC">AC</option>
+                                        <option <?php if($arrayDadosBancoProduto['estado'] == 'AL'){echo 'selected';} ?> value="AL">AL</option>
+                                        <option <?php if($arrayDadosBancoProduto['estado'] == 'AM'){echo 'selected';} ?> value="AM">AM</option>
+                                        <option <?php if($arrayDadosBancoProduto['estado'] == 'AP'){echo 'selected';} ?> value="AP">AP</option>
+                                        <option <?php if($arrayDadosBancoProduto['estado'] == 'BA'){echo 'selected';} ?> value="BA">BA</option>
+                                        <option <?php if($arrayDadosBancoProduto['estado'] == 'CE'){echo 'selected';} ?> value="CE">CE</option>
+                                        <option <?php if($arrayDadosBancoProduto['estado'] == 'DF'){echo 'selected';} ?> value="DF">DF</option>
+                                        <option <?php if($arrayDadosBancoProduto['estado'] == 'ES'){echo 'selected';} ?> value="ES">ES</option>
+                                        <option <?php if($arrayDadosBancoProduto['estado'] == 'GO'){echo 'selected';} ?> value="GO">GO</option>
+                                        <option <?php if($arrayDadosBancoProduto['estado'] == 'MA'){echo 'selected';} ?> value="MA">MA</option>
+                                        <option <?php if($arrayDadosBancoProduto['estado'] == 'MG'){echo 'selected';} ?> value="MG">MG</option>
+                                        <option <?php if($arrayDadosBancoProduto['estado'] == 'MS'){echo 'selected';} ?> value="MS">MS</option>
+                                        <option <?php if($arrayDadosBancoProduto['estado'] == 'MT'){echo 'selected';} ?> value="MT">MT</option>
+                                        <option <?php if($arrayDadosBancoProduto['estado'] == 'PA'){echo 'selected';} ?> value="PA">PA</option>
+                                        <option <?php if($arrayDadosBancoProduto['estado'] == 'PB'){echo 'selected';} ?> value="PB">PB</option>
+                                        <option <?php if($arrayDadosBancoProduto['estado'] == 'PE'){echo 'selected';} ?> value="PE">PE</option>
+                                        <option <?php if($arrayDadosBancoProduto['estado'] == 'PI'){echo 'selected';} ?> value="PI">PI</option>
+                                        <option <?php if($arrayDadosBancoProduto['estado'] == 'PR'){echo 'selected';} ?> value="PR">PR</option>
+                                        <option <?php if($arrayDadosBancoProduto['estado'] == 'RJ'){echo 'selected';} ?> value="RJ">RJ</option>
+                                        <option <?php if($arrayDadosBancoProduto['estado'] == 'RN'){echo 'selected';} ?> value="RN">RN</option>
+                                        <option <?php if($arrayDadosBancoProduto['estado'] == 'RS'){echo 'selected';} ?> value="RS">RS</option>
+                                        <option <?php if($arrayDadosBancoProduto['estado'] == 'RO'){echo 'selected';} ?> value="RO">RO</option>
+                                        <option <?php if($arrayDadosBancoProduto['estado'] == 'RR'){echo 'selected';} ?> value="RR">RR</option>
+                                        <option <?php if($arrayDadosBancoProduto['estado'] == 'SC'){echo 'selected';} ?> value="SC">SC</option>
+                                        <option <?php if($arrayDadosBancoProduto['estado'] == 'SE'){echo 'selected';} ?> value="SE">SE</option>
+                                        <option <?php if($arrayDadosBancoProduto['estado'] == 'SP'){echo 'selected';} ?> value="SP">SP</option>
+                                        <option <?php if($arrayDadosBancoProduto['estado'] == 'TO'){echo 'selected';} ?> value="TO">TO</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="inputCity">Cidade</label>
-                                    <input name="cidade" type="text" class="form-control" id="inputCity" placeholder="Digite sua Cidade" value="<?php echo $arrayDadosBanco['cidade'];?>">
+                                    <input name="cidade" type="text" class="form-control" id="inputCity" placeholder="Digite sua Cidade" value="<?php echo $arrayDadosBancoProduto['cidade'];?>">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="inputRua4">Rua</label>
-                                    <input name="rua" type="text" class="form-control" id="inputRua4" placeholder="Digite sua rua" value="<?php echo $arrayDadosBanco['rua'];?>">
+                                    <input name="rua" type="text" class="form-control" id="inputRua4" placeholder="Digite sua rua" value="<?php echo $arrayDadosBancoProduto['rua'];?>">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="inputBairo4">Bairro</label>
-                                    <input name="bairro" type="text" class="form-control" id="inputBairo4" placeholder="Digite seu bairo" value="<?php echo $arrayDadosBanco['bairro']?>">
+                                    <input name="bairro" type="text" class="form-control" id="inputBairo4" placeholder="Digite seu bairo" value="<?php echo $arrayDadosBancoProduto['bairro']?>">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md">
                                     <label for="inputEmail4">Email</label>
-                                    <input name="email" type="email" class="form-control" id="inputEmail4" placeholder="Email" value="<?php echo $arrayDadosBanco['email'];?>">
+                                    <input name="email" type="email" class="form-control" id="inputEmail4" placeholder="Email" value="<?php echo $arrayDadosBancoProduto['email'];?>">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="telefone1Cliente">Telefone 1</label>
-                                    <input onkeypress="caracteresTelefone()" name="telefone1" type="text" class="form-control" id="telefone1Cliente" placeholder="Digite Telefone" value="<?php echo $arrayDadosBanco['telefone1'];?>">
+                                    <input onkeypress="caracteresTelefone()" name="telefone1" type="text" class="form-control" id="telefone1Cliente" placeholder="Digite Telefone" value="<?php echo $arrayDadosBancoProduto['telefone1'];?>">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="telefone2Cliente">Telefone 2</label>
-                                    <input name="telefone2" type="text" class="form-control" id="telefone2Cliente" placeholder="Digite Telefone" value="<?php echo $arrayDadosBanco['telefone2'];?>"> 
+                                    <input name="telefone2" type="text" class="form-control" id="telefone2Cliente" placeholder="Digite Telefone" value="<?php echo $arrayDadosBancoProduto['telefone2'];?>"> 
                                 </div>
                             </div>
                             <div>
@@ -291,29 +291,29 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="inputBanco4">Banco</label>
-                                    <input name="banco" type="text" class="form-control" id="inputBanco4" placeholder="Digite o Banco" value="<?php echo $arrayDadosBanco['banco'];?>">
+                                    <input name="banco" type="text" class="form-control" id="inputBanco4" placeholder="Digite o Banco" value="<?php echo $arrayDadosBancoProduto['banco'];?>">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="inputTitular4">Titular</label>
-                                    <input name="titular" type="text" class="form-control" id="inputTitular4" placeholder="Titular" value="<?php echo $arrayDadosBanco['titular']; ?>">
+                                    <input name="titular" type="text" class="form-control" id="inputTitular4" placeholder="Titular" value="<?php echo $arrayDadosBancoProduto['titular']; ?>">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="inputAgencia">Agencia</label>
-                                    <input name="agencia" onkeypress="return caracteresNumeros()" type="text" class="form-control" id="inputAgencia" placeholder="Digite sua Cidade" value="<?php echo $arrayDadosBanco['agencia']; ?>">
+                                    <input name="agencia" onkeypress="return caracteresNumeros()" type="text" class="form-control" id="inputAgencia" placeholder="Digite sua Cidade" value="<?php echo $arrayDadosBancoProduto['agencia']; ?>">
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label for="inputState">Tipo</label>
                                     <select name="tipoConta" class="custom-select custom-select-md">
                                         <option value="CC">C/C</option>
-                                        <option <?php if($arrayDadosBanco['tipo_conta'] == 'CP'){echo 'selected';} ?> value="CP">C/P</option>
+                                        <option <?php if($arrayDadosBancoProduto['tipo_conta'] == 'CP'){echo 'selected';} ?> value="CP">C/P</option>
                                     </select>
                                 </div>
                                 
                                 <div class="form-group col-md-4">
                                     <label for="inputState">Conta</label>
-                                    <input name="numeroConta" onkeypress="return caracteresNumeros()" type="text" class="form-control" id="inputagencia" placeholder="Conta" value="<?php echo $arrayDadosBanco['numero_conta']; ?>">
+                                    <input name="numeroConta" onkeypress="return caracteresNumeros()" type="text" class="form-control" id="inputagencia" placeholder="Conta" value="<?php echo $arrayDadosBancoProduto['numero_conta']; ?>">
                                     
                                 </div>
                             </div>
@@ -322,15 +322,15 @@
                                     <label for="inputState">Pessoa fisca ou juridica</label>
                                     <select onchange="mudarTipoContaFisica(1)" id="tipoContaPessoa" class="custom-select custom-select-md">
                                         <option value="1">Pessoa fisica</option>
-                                        <option <?php if(strlen($arrayDadosBanco['cpf_cnpj_conta']) > 14){echo 'selected';} ?> value="2" >Pessoa juridica</option>
+                                        <option <?php if(strlen($arrayDadosBancoProduto['cpf_cnpj_conta']) > 14){echo 'selected';} ?> value="2" >Pessoa juridica</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label id="cpfCnpjConta" for="cpfCnpjV">CPF</label>
-                                    <input name="cpfCnpjConta" type="text" class="form-control" id="cpfCnpjV" value="<?php echo $arrayDadosBanco['cpf_cnpj_conta']; ?>">
+                                    <input name="cpfCnpjConta" type="text" class="form-control" id="cpfCnpjV" value="<?php echo $arrayDadosBancoProduto['cpf_cnpj_conta']; ?>">
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Cadastrar</button>
+                            <button type="submit" class="btn btn-primary"><?php if(empty($id)){ echo 'Cadastrar';}else{ echo 'Editar';} ?></button>
                             <br><br>
                         </form>
                     </div>

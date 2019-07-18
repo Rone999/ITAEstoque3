@@ -11,7 +11,21 @@ if (!isset($_SESSION['indexPaginaCliente'])) {
     $_SESSION['indexPaginaCliente'] = 1;
 }
 
-function preencherTabela() {
+if (!isset($_SESSION['indexLimitProduto'])) {
+    $_SESSION['indexLimitProduto'] = 0;
+}
+
+if (!isset($_SESSION['indexPaginaProduto'])) {
+    $_SESSION['indexPaginaProduto'] = 1;
+}
+
+//$_SESSION['ultimaAba'] = 'cliente';
+if (!isset($_SESSION['ultimaAba'])) {
+    $_SESSION['ultimaAba'] = 'cliente';
+}
+
+
+function preencherTabelaClientes() {
     $link = conecxao::conectar();
 
     $query = "SELECT id,tipo,nome_razao_social, cpf_cnpj,rg_inscricao_social,cidade FROM `clientes` LIMIT 10 OFFSET " . $_SESSION['indexLimitCliente'] . ";";
@@ -34,7 +48,7 @@ function preencherTabela() {
                         <td>$rg</td>
                         <td>$cidade</td>
                         <td>
-                        <a class=\"btn btn-primary rounded-pill\" role =\"button\" href=\"apagar_cliente.php?id=$id\" onclick=\" return confirm('TEM CERTEZA QUE DESEJA EXCLUIR?')\">
+                        <a class=\"btn btn-primary rounded-pill\" role =\"button\" href=\"apagar_cliente.php?id=$id&aba=cliente\" onclick=\" return confirm('TEM CERTEZA QUE DESEJA EXCLUIR?')\">
                             <img width=\"20\" height=\"20\" src=\"imgs/delete.png\">
                         </a>
                         |
@@ -45,6 +59,41 @@ function preencherTabela() {
                       </tr>";
     }
 }
+    
+    
+    function preencherTabelaProdutos() {
+    $link = conecxao::conectar();
+
+    $query = "SELECT id,nome,quantidade,valor_venda FROM `produtos` LIMIT 10 OFFSET " . $_SESSION['indexLimitProduto'] . ";";
+
+    $retornoBanco = mysqli_query($link, $query);
+
+    while ($linha = mysqli_fetch_array($retornoBanco, MYSQLI_ASSOC)) {
+        $id = $linha['id'];
+        $nome = $linha['nome'];
+        $quantidade = $linha['quantidade'];
+        $valor_venda = $linha['valor_venda'];
+
+        echo "<tr>
+                        <th scope=\"row\">$id</th>
+                        <td>$nome</td>
+                        <td>$quantidade</td>
+                        <td>$valor_venda</td>
+                        <td>
+                        <a class=\"btn btn-primary rounded-pill\" role =\"button\" href=\"apagar_cliente.php?id=$id&aba=produto\" onclick=\" return confirm('TEM CERTEZA QUE DESEJA EXCLUIR?')\">
+                            <img width=\"20\" height=\"20\" src=\"imgs/delete.png\">
+                        </a>
+                        |
+                        <a onclick=\"setarDadosCliente('$id','$nome','$quantidade','$valor_venda');\" class=\"btn btn-warning rounded-pill\" role =\"button\" data-toggle=\"modal\" data-target=\"#exampleModal\" data-whatever=\"@mdo\" href=\"cadastrarcliente.php?id=$id\">
+                            <img width=\"20\" height=\"20\" src=\"imgs/edit.png\">
+                         </a>
+                         </td>
+                      </tr>";
+    }
+}
+
+    
+    
 ?>
 
 
@@ -59,27 +108,46 @@ function preencherTabela() {
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script src="js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="js/jquery.min.js" ></script>
+        <script type="text/javascript" src="js/jquery.mask.js"></script>
+ 
+            <script type="text/javascript">
+                jQuery(function ($) {
+                    $('#quantProduto').mask("#########0,00", {reverse: true});
+                    $('#valorProduto').mask("#########0,00", {reverse: true});
 
-        <style type="text/css"> 
-            .tira_linha.nounderline:link 
-            { 
-        </style>
+                    /*$('#cpfClienteI').mask('000.000.000-00');
 
-        <script>
-            function alertar() {
-                if (confirm("Tem certeza?")) {
+                    $('#cpfCnpjV').mask('000.000.000-00');*/
 
+                });
+                
+                function setarDadosCliente(codigo,nome,quantidade,valor){
+                    document.getElementById("idProduto").value = codigo;
+                    document.getElementById("nomeProduto").value = nome;
+                    document.getElementById("quantProduto").value = quantidade;
+                    document.getElementById("valorProduto").value = valor;
+                    mudarNomeBotaoProduto('Editar');
+                    
                 }
-            }
-
-        </script>
-
+                
+                function mudarNomeBotaoProduto(nome){
+                    if(nome == 'Cadastrar'){
+                        document.getElementById("idProduto").value = '';
+                        document.getElementById("nomeProduto").value = '';
+                        document.getElementById("quantProduto").value = '';
+                        document.getElementById("valorProduto").value = '';
+                    }
+                    
+                    document.getElementById("idButaoProduto").innerHTML = nome;
+                }
+               
+            </script>
     </head>
     <body>
         <nav class="navbar navbar-light bg-light fixed-top">
-            <a class="navbar-brand" href="#">
+            <a onclick="setarDadosCliente(50,'teste',50,50);" class="navbar-brand" href="#">
                 <img src="imgs/nome.png" width="200" height="40" alt="">
             </a>
         </nav>
@@ -87,15 +155,15 @@ function preencherTabela() {
         <!-- Abas de conteudo-->
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="clientes-tab" data-toggle="tab" href="#clientes" role="tab" aria-controls="clientes" aria-selected="true">CLIENTES</a>
+                <a <?php if($_SESSION['ultimaAba'] == 'cliente'){echo 'class="nav-link active"';}else{echo 'class="nav-link"';} ?> class="nav-link active" id="clientes-tab" data-toggle="tab" href="#clientes" role="tab" aria-controls="clientes" <?php if($_SESSION['ultimaAba'] == 1){echo 'aria-selected="true"';}else{echo 'aria-selected="false"';} ?>>CLIENTES</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="produtos-tab" data-toggle="tab" href="#produtos" role="tab" aria-controls="produtos" aria-selected="false">PRODUTOS</a>
+                <a <?php if($_SESSION['ultimaAba'] == 'produto'){echo 'class="nav-link active"';}else{echo 'class="nav-link"';} ?>  class="nav-link" id="produtos-tab" data-toggle="tab" href="#produtos" role="tab" aria-controls="produtos" <?php if($_SESSION['ultimaAba'] == 2){echo 'aria-selected="true"';}else{echo 'aria-selected="false"';} ?>>PRODUTOS</a>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
             <!-- conteudo de clientes-->
-            <div class="tab-pane fade show active" id="clientes" role="tabpanel" aria-labelledby="clientes-tab">
+            <div <?php if($_SESSION['ultimaAba'] == 'cliente'){echo 'class="tab-pane fade show active"';}else{echo 'class="tab-pane fade"';} ?> id="clientes" role="tabpanel" aria-labelledby="clientes-tab">
 
                 
                     <div class="row col-12">
@@ -115,7 +183,7 @@ function preencherTabela() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php preencherTabela() ?>
+                                    <?php preencherTabelaClientes() ?>
                                 </tbody>
                             </table>
 
@@ -124,13 +192,13 @@ function preencherTabela() {
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination">
                                         <li class="page-item">
-                                            <a class="page-link" href="retornar_pagina_cliente.php" aria-label="Previous">
+                                            <a class="page-link" href="retornar_pagina_cliente.php?aba=cliente" aria-label="Previous">
                                                 <span aria-hidden="true">&laquo;</span>
                                             </a>
                                         </li>
                                         <li class="page-item"><a class="page-link"> <?php echo $_SESSION['indexPaginaCliente'] ?> </a></li>
                                         <li class="page-item">
-                                            <a class="page-link" href="avancar_pagina_cliente.php" aria-label="Next">
+                                            <a class="page-link" href="avancar_pagina_cliente.php?aba=cliente" aria-label="Next">
                                                 <span aria-hidden="true">&raquo;</span>
                                             </a>
                                         </li>
@@ -157,7 +225,7 @@ function preencherTabela() {
                 
             </div>
             <!-- conteudo de produtos -->
-            <div class="tab-pane fade" id="produtos" role="tabpanel" aria-labelledby="produtos-tab">.PRODUTOS..
+            <div <?php if($_SESSION['ultimaAba'] == 'produto'){echo 'class="tab-pane fade show active"';}else{echo 'class="tab-pane fade"';} ?>  id="produtos" role="tabpanel" aria-labelledby="produtos-tab">
               <div class="row col-12">
                <div class="col-10">
                 <form method="get" action="apagar_cliente.php">
@@ -171,13 +239,31 @@ function preencherTabela() {
                         </tr>
                      </thead>
                         <tbody>
-                        <?php preencherTabela() ?>
+                           <?php preencherTabelaProdutos();?>
                         </tbody>
                   </table>
+                    
+                    <div>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <a class="page-link" href="retornar_pagina_cliente.php?aba=produto" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item"><a class="page-link"> <?php echo $_SESSION['indexPaginaCliente'] ?> </a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="avancar_pagina_cliente.php?aba=produto" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
                </form>
              </div>
                <div class="col-2">
-                   <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Cadastar</button>
+                   <button onclick="mudarNomeBotaoProduto('Cadastrar');" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Cadastar</button>
                    <div class="dropdown-divider"></div>
                    <button type="button" class="btn btn-primary btn-sm btn-block">Editar</button>
                    <button type="button" class="btn btn-primary btn-sm btn-block">Excluir</button>
@@ -201,28 +287,32 @@ function preencherTabela() {
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form>
-                    <div class="form-group">
-                      <label for="recipient-name" class="col-form-label">Codigo</label>
-                      <input type="text" class="form-control" id="recipient-name">
-                    </div>
+                    <form method="post" action="cadastrar_produto.php">
+                    
+                    <input name="id" type="text" class="form-control" id="idProduto">
+                    <script>
+                        $('#idProduto').hide();
+                    </script>    
+                        
                     <div class="form-group">
                       <label for="recipient-name" class="col-form-label">Nome</label>
-                      <input type="text" class="form-control" id="recipient-name">
+                      <input name="nome" type="text" class="form-control" id="nomeProduto">
                     </div>
                     <div class="form-group">
                       <label for="recipient-name" class="col-form-label">Quantidade no estoque</label>
-                      <input type="text" class="form-control" id="recipient-name">
+                      <input name="quantidade" type="text" class="form-control" id="quantProduto">
                     </div>
                     <div class="form-group">
                       <label for="recipient-name" class="col-form-label">Valor de venda R$</label>
-                      <input type="text" class="form-control" id="recipient-name">
+                      <input name="valor_venda" type="text" class="form-control" id="valorProduto">
+                    </div>
+                      
+                    <div class="modal-footer">
+                        <button id="idButaoProduto" type="submit" class="btn btn-primary">Cadastrar</button>
                     </div>
                   </form>
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-primary">Cadastrar</button>
-                </div>
+                
               </div>
             </div>
           </div>

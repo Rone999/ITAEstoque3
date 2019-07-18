@@ -3,15 +3,27 @@ require_once 'Conecxao.php';
 session_start();
 
 if (isset($_SESSION['id'])) {
-    echo '';
-    
-    $link = Conecxao::conectar();
-
     $id = $_GET['id'];
+    $aba = $_GET['aba'];
     
-    $query = "DELETE FROM `clientes` WHERE id = '$id';";
+    
+    if($aba == 'cliente'){
+        $link = Conecxao::conectar();
 
-    mysqli_query($link, $query);
+        $query = "DELETE FROM `clientes` WHERE id = '$id';";
+
+        mysqli_query($link, $query);
+
+        header("Location: mudar_aba.php?id_aba=cliente");
+    }
     
-    header("Location: indexlogado.php");
+    if($aba == 'produto'){
+        $link = Conecxao::conectar();
+
+        $query = "DELETE FROM `produtos` WHERE id = '$id';";
+
+        mysqli_query($link, $query);
+
+        header("Location: mudar_aba.php?id_aba=produto");
+    }
 }
