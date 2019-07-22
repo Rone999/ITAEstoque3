@@ -22,4 +22,15 @@ if(isset($_SESSION['id'])){
     
          header("Location: mudar_aba.php?id_aba=produto");
     }
+    
+    if($aba == 'entrSaid'){
+        $tipo = $_GET['tipo'];
+        if($_SESSION['indexLimitEntSai'] > 0){
+          $_SESSION['indexLimitEntSai'] -= 10;
+          $_SESSION['indexPaginaEntSai']--;
+        }
+    
+         //echo $tipo;
+         header("Location: listas_entrada_saida.php?tipo=".$tipo);
+    }
 }
