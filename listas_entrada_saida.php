@@ -134,9 +134,11 @@
             </a>
         </nav>
         <br><br><br><br>
-              <div class="row col-12">
+        
+        <h3><?php echo $tipo ?></h3>
+        
+        <div class="row col-12">
         <div class="col-10">
-            <h3><?php echo $tipo ?></h3>
             <table  class="table table-striped">
             <thead>
               <tr>
@@ -175,6 +177,9 @@
                 </nav>
             </div>
         </div>
+            
+        
+                
         <div class="col-2">
             <a href="entrada_saida.php?tipo=<?php echo $tipo?>"><button type="button" class="btn btn-primary btn-sm btn-block">Registar <?php echo ($tipo == 'ENTRADA') ? "Entrada" : 'Saida' ?></button></a>
           <div class="dropdown-divider"></div>
