@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+if (!isset($_SESSION['id'])) {
+    header("Location: index.php");
+}
 require_once 'Conecxao.php';
 //$_SESSION['indexLimitCliente'] = 0;
 if (!isset($_SESSION['indexLimitCliente'])) {
@@ -23,7 +26,6 @@ if (!isset($_SESSION['indexPaginaProduto'])) {
 if (!isset($_SESSION['ultimaAba'])) {
     $_SESSION['ultimaAba'] = 'cliente';
 }
-
 
 function preencherTabelaClientes() {
     $link = conecxao::conectar();
@@ -91,9 +93,7 @@ function preencherTabelaClientes() {
                       </tr>";
     }
 }
-
-    
-    
+ 
 ?>
 
 
@@ -144,7 +144,7 @@ function preencherTabelaClientes() {
                 }
                 
                 function clickEntradaSaida(tipo){
-                    window.location.href = "entradasaida.php?tipo="+tipo;
+                    window.location.href = "listas_entrada_saida.php?tipo="+tipo+"&resetar=S";
                 }
                
             </script>
@@ -269,8 +269,8 @@ function preencherTabelaClientes() {
                <div class="col-2">
                    <button onclick="mudarNomeBotaoProduto('Cadastrar');" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Cadastar</button>
                    <div class="dropdown-divider"></div>
-                   <button onclick="clickEntradaSaida('Entrada')" type="button" class="btn btn-primary btn-sm btn-block">Entrada</button>
-                   <button onclick="clickEntradaSaida('Saida')" type="button" class="btn btn-primary btn-sm btn-block">Saida</button>
+                   <button onclick="clickEntradaSaida('ENTRADA')" type="button" class="btn btn-primary btn-sm btn-block">Entrada</button>
+                   <button onclick="clickEntradaSaida('SAIDA')" type="button" class="btn btn-primary btn-sm btn-block">Saida</button>
                    <div class="dropdown-divider"></div>
                    <button type="button" class="btn btn-primary btn-sm btn-block">Historico</button>
                    <button type="button" class="btn btn-success btn-sm btn-block">emprimir</button>
