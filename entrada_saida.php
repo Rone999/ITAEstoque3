@@ -84,6 +84,7 @@ function preencherComboNomeProduto() {
         <script>
             var arrayProdutos = new Array();
             var arrayTotais = new Array();
+            var arrayTotaisP = new Array();
             var saldoCliente = 0;
             var totalProdutos = 0;
 
@@ -122,7 +123,7 @@ function preencherComboNomeProduto() {
                 var theEvent = evt || window.event;
                 var key = theEvent.keyCode || theEvent.which;
                 key = String.fromCharCode(key);
-                var regex = /^[0-9-.\-.]+$/;
+                var regex = /^[0-9.]+$/;
                 if (!regex.test(key)) {
                     theEvent.returnValue = false;
                     if (theEvent.preventDefault)
@@ -165,6 +166,8 @@ function preencherComboNomeProduto() {
 
                     arrayProdutos[numeroLinhas] = '{"codigo":' + codigo.value + ',"nome":\"' + nome.value + '\","peso":' + peso.value + ',"tara":' + ((tara.value == '') ? '0' : tara.value) + ',"pesoL":' + pesoLiquido.value + ',"precoPQ":' + PrecoPQuilo.value + ',"valor":' + retirarSifao(valor.value) + '}';
                     arrayTotais[numeroLinhas] = retirarSifao(valor.value);
+                    arrayTotaisP[numeroLinhas] = pesoLiquido.value;
+                    somarTotalP();
                     limparCampos();
                     somarTotal();
                     if(tipo == 'SAIDA'){
@@ -173,6 +176,18 @@ function preencherComboNomeProduto() {
                 } else {
                     alert('SELECIONE O PRODUTO');
                 }
+            }
+            
+            function somarTotalP(){
+                var total = 0;
+
+                for (var i = 0; i < arrayTotaisP.length; i++) {
+                    if (arrayTotaisP[i] != null) {
+                        total += parseFloat(arrayTotaisP[i]);
+                    }
+                }
+                
+                document.getElementById('totalP').value = total;
             }
 
             function somarTotal() {
@@ -269,6 +284,7 @@ function preencherComboNomeProduto() {
             function excluirDoArray(indexExcluir) {
                 var arrayProdutoExcluido = new Array();
                 var arrayTotaisExcluido = new Array();
+                var arrayTotaisPExcluido = new Array();
 
                 var l = 0;
                 for (var i = 1; i < arrayProdutos.length; i++) {
@@ -278,18 +294,32 @@ function preencherComboNomeProduto() {
 
                     arrayProdutoExcluido[i] = arrayProdutos[i + l];
                 }
+                
+                arrayProdutos = arrayProdutoExcluido;
 
-                var p = 0;
+                l = 0;
                 for (var i = 1; i < arrayTotais.length; i++) {
                     if (i == indexExcluir) {
-                        p++;
+                        l++;
                     }
 
-                    arrayTotaisExcluido[i] = arrayTotais[i + p];
+                    arrayTotaisExcluido[i] = arrayTotais[i + l];
                 }
 
                 arrayTotais = arrayTotaisExcluido;
+                
+                l = 0;
+                for (var i = 1; i < arrayTotaisP.length; i++) {
+                    if (i == indexExcluir) {
+                        l++;
+                    }
 
+                    arrayTotaisPExcluido[i] = arrayTotaisP[i + l];
+                }
+
+                arrayTotaisP = arrayTotaisPExcluido;
+
+                somarTotalP();
                 somarTotal();
             }
 
@@ -428,15 +458,14 @@ function preencherComboNomeProduto() {
                         <label for="comboCodigoCliente">ID</label>
                         <select onchange="igualar('nome'); obterSaldoCliente()" id="comboCodigoCliente"  class="form-control" name="codigoCliente">
                             <option value="SELECIONE">SELECIONE</option>
-<?php preencherComboID(); ?>       
+                                <?php preencherComboID(); ?>       
                         </select>  
                     </div>
 
 
                     <div class="form-group col-5">
                         <label for="comboNomeCliente">Nome/razão social</label>
-                        <select onchange="igualar('codigo');
-                                obterSaldoCliente()" id="comboNomeCliente" class="form-control" name="nomeCliente">
+                        <select onchange="igualar('codigo'); obterSaldoCliente()" id="comboNomeCliente" class="form-control" name="nomeCliente">
                             <option value="SELECIONE">SELECIONE</option>
                                 <?php preencherComboNome(); ?>       
                         </select>  
@@ -500,15 +529,17 @@ function preencherComboNomeProduto() {
                     </table>
                 </div>
                 <div class="col-2">
-                    <label  for="total">TOTAL:</label>
+                    <label  for="total">VALOR TOTAL:</label>
                     <input  type="text" class="form-control" id="total" placeholder="" disabled="">
+                    <label  for="totalP">PESO L. TOTAL:</label>
+                    <input  type="text" class="form-control" id="totalP" placeholder="" disabled="">
                     <div class="dropdown-divider"></div>
                     <label for="saldo">SALDO:</label>
                     <input type="text" class="form-control" id="saldo" placeholder="" disabled="">
                     <label id="acreSaldoL" for="acreSaldo">ACRESC. AO SALDO</label>
-                    <input onkeypress="return caracteresNumPontos()" onkeydown="calcularSaldo()" onkeyup="calcularSaldo()" type="text" class="form-control" id="acreSaldo" placeholder="Valor">
+                    <input onkeypress="return caracteresNumPontos()" onkeydown="calcularSaldo()" onkeyup="calcularSaldo();" type="text" class="form-control" id="acreSaldo" placeholder="Valor">
                     <label id="emprestimoL" for="emprestimo">EMPRESTIMO</label>
-                    <input onkeypress="return caracteresNumPontos()" onkeydown="calcularSaldo()" onkeyup="calcularSaldo()" type="text" class="form-control" id="emprestimo" placeholder="Valor emprestimo">
+                    <input onkeypress="return caracteresNumPontos()" onkeydown="calcularSaldo()" onkeyup="calcularSaldo();" type="text" class="form-control" id="emprestimo" placeholder="Valor emprestimo">
                     <div class="dropdown-divider"></div>
                     <label for="descricao">DESCRIÇÃO</label>
                     <input type="text" class="form-control" id="descricao" placeholder="Descrição">

@@ -2,9 +2,13 @@
     require_once 'conecxao.php';
     session_start();
     
-    $tipo = $_GET['tipo'];
-    $isResetar = $_GET['resetar'];
+    ini_set( 'display_errors', 0 );
     
+    $tipo = $_GET['tipo'];
+    
+ 
+    $isResetar = $_GET['resetar'];
+
     if($isResetar == 'S'){
         $_SESSION['indexLimitEntSai'] = 0;
         $_SESSION['indexPaginaEntSai'] = 1;
@@ -19,46 +23,46 @@
     }
     
     function preencherTabela() {
-    $link = conecxao::conectar();
+        $link = conecxao::conectar();
 
-    $query = "SELECT his_entrada_ou_saida.id,id_cliente, clientes.nome_razao_social, peso_total, tara_toral, peso_liquido_total, valor_total, acrescimo_desconto_saldo, emprestimo_pagamento, descricao, data_entr_sai FROM `his_entrada_ou_saida` 
-    INNER JOIN clientes ON clientes.id = id_cliente 
-    WHERE entrada_ou_saida = '".(($_GET['tipo'] == 'ENTRADA') ? 'E' : 'S')."' ORDER BY `his_entrada_ou_saida`.id DESC LIMIT 10 OFFSET " . $_SESSION['indexLimitEntSai'] . ";";
+        $query = "SELECT his_entrada_ou_saida.id,id_cliente, clientes.nome_razao_social, peso_total, tara_toral, peso_liquido_total, valor_total, acrescimo_desconto_saldo, emprestimo_pagamento, descricao, data_entr_sai FROM `his_entrada_ou_saida` 
+        INNER JOIN clientes ON clientes.id = id_cliente 
+        WHERE entrada_ou_saida = '".(($_GET['tipo'] == 'ENTRADA') ? 'E' : 'S')."' ORDER BY `his_entrada_ou_saida`.id DESC LIMIT 10 OFFSET " . $_SESSION['indexLimitEntSai'] . ";";
 
-    $retornoBanco = mysqli_query($link, $query);
+        $retornoBanco = mysqli_query($link, $query);
 
-        while ($linha = mysqli_fetch_array($retornoBanco, MYSQLI_ASSOC)) {
-            $id = $linha['id'];
-            $idCliente = $linha['id_cliente'];
-            $nomeRazaoSocial = $linha['nome_razao_social'];
-            $pesoTotal = $linha['peso_total'];
-            $taraTotal = $linha['tara_toral'];
-            $pesoL = $linha['peso_liquido_total'];
-            $valor_total = 'R$' . number_format($linha['valor_total'], 2);
-            $acrescimoDesc = 'R$' . number_format($linha['acrescimo_desconto_saldo'], 2);
-            $emprestimo = 'R$' . number_format($linha['emprestimo_pagamento'], 2);
-            $descri = $linha['descricao'];
-            $data = date('d/m/Y',  strtotime($linha['data_entr_sai']));
+            while ($linha = mysqli_fetch_array($retornoBanco, MYSQLI_ASSOC)) {
+                $id = $linha['id'];
+                $idCliente = $linha['id_cliente'];
+                $nomeRazaoSocial = $linha['nome_razao_social'];
+                $pesoTotal = $linha['peso_total'];
+                $taraTotal = $linha['tara_toral'];
+                $pesoL = $linha['peso_liquido_total'];
+                $valor_total = 'R$' . number_format($linha['valor_total'], 2);
+                $acrescimoDesc = 'R$' . number_format($linha['acrescimo_desconto_saldo'], 2);
+                $emprestimo = 'R$' . number_format($linha['emprestimo_pagamento'], 2);
+                $descri = $linha['descricao'];
+                $data = date('d/m/Y',  strtotime($linha['data_entr_sai']));
 
-            echo "<tr>
-                            <th scope=\"row\">$idCliente</th>
-                            <td>$nomeRazaoSocial</td>
-                            <td>$pesoTotal</td>
-                            <td>$taraTotal</td>
-                            <td>$pesoL</td>
-                            <td>$valor_total</td>
-                            <td>$acrescimoDesc</td>
-                            <td>$emprestimo</td>
-                            <td>$descri</td>
-                            <td>$data</td>
-                            <td>
-                            <a class=\"btn btn-primary rounded-pill\" role =\"button\" onclick=\"listarVinculados($id)\">
-                                <img width=\"20\" height=\"20\" src=\"imgs/menu.png\">
-                            </a>
-                            </td>
-                          </tr>";
+                echo "<tr>
+                                <th scope=\"row\">$idCliente</th>
+                                <td>$nomeRazaoSocial</td>
+                                <td>$pesoTotal</td>
+                                <td>$taraTotal</td>
+                                <td>$pesoL</td>
+                                <td>$valor_total</td>
+                                <td>$acrescimoDesc</td>
+                                <td>$emprestimo</td>
+                                <td>$descri</td>
+                                <td>$data</td>
+                                <td>
+                                <a id=\"botao$id\" class=\"btn btn-primary rounded-pill\" role =\"button\" onclick=\"listarVinculados($id)\">
+                                    <img width=\"20\" height=\"20\" src=\"imgs/menu.png\">
+                                </a>
+                                </td>
+                              </tr>";
+            }
         }
-    }
 ?>
 
 <!doctype html>
@@ -76,9 +80,20 @@
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
     
         <script type="text/javascript">
+            var ultimoBotaoClicado = '';
+            
             function listarVinculados(idEntradaProduto){
                 $.post("getProdutosEntradaSaida.php", "idEntradaSaida=" + idEntradaProduto, function (data) {
                     var retornoJson = jQuery.parseJSON(data);
+                    
+                    if(ultimoBotaoClicado !== ''){
+                        var botao = document.getElementById(ultimoBotaoClicado);
+                        botao.className  = "btn btn-primary rounded-pill";
+                    }
+                    
+                    var botao = document.getElementById('botao'+idEntradaProduto);
+                    botao.className  = "btn btn-success rounded-pill";
+                    ultimoBotaoClicado ='botao'+idEntradaProduto;
                     
                     var tabela = document.getElementById('tabelaProdutos');
                     
@@ -144,8 +159,8 @@
               <tr>
                 <th scope="col">ID</th>
                 <th scope="col">NOME/RAZÃOSOCIAL</th>
-                <th scope="col">PESOTOTAL</th>
-                <th scope="col">TARATOTAL</th>
+                <th scope="col">PESO TOTAL</th>
+                <th scope="col">TARA TOTAL</th>
                 <th scope="col">PESO LIQUIDO</th>
                 <th scope="col">VALOR FINAL</th>
                 <th scope="col">ACRECIMO</th>
@@ -163,13 +178,13 @@
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
                         <li class="page-item">
-                            <a class="page-link" href="retornar_pagina_cliente.php?aba=entrSaid&tipo=<?php echo $tipo ?>" aria-label="Previous">
+                            <a class="page-link" href="retornar_pagina_cliente.php?aba=entrSaid&tipo=<?php echo $tipo ?>&resetar=N" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
                         <li class="page-item"><a class="page-link"> <?php echo $_SESSION['indexPaginaEntSai'] ?> </a></li>
                         <li class="page-item">
-                            <a class="page-link" href="avancar_pagina_cliente.php?aba=entrSaid&tipo=<?php echo $tipo ?>" aria-label="Next">
+                            <a class="page-link" href="avancar_pagina_cliente.php?aba=entrSaid&tipo=<?php echo $tipo ?>&resetar=N" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>

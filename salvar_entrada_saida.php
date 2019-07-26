@@ -41,7 +41,6 @@
             if($arrayBanco['id']){
                 $idUltimoHistoricoEntradaSaida = $arrayBanco['id'];
             }
-
             foreach ( $produtos as $pro ){
                 $query = "INSERT INTO his_entr_ou_sai_prod (id_his_entrada_ou_saida,id_produto,peso,tara,peso_liquido,preco_por_quilo,valor_final) VALUES ('$idUltimoHistoricoEntradaSaida','$pro->codigo','$pro->peso','$pro->tara','$pro->pesoL','$pro->precoPQ','$pro->valor');" ;
                 mysqli_query($link,$query);
