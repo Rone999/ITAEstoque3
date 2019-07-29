@@ -2,7 +2,7 @@
 session_start();
 
 if(isset($_SESSION['id'])){
-    require_once 'Conecxao.php';
+    require_once 'conecxao.php';
     
     $aba = $_GET['aba'];
     

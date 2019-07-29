@@ -7,7 +7,7 @@
 
         $query = "SELECT  id_cliente,clientes.nome_razao_social AS nome, clientes.valor AS saldo, emprestimo_ou_juros,historico_imprestimo.valor,acrecimo_porcentagem,acrecimo_valor,data,valor_anterior,valor_posterior FROM historico_imprestimo
         INNER JOIN clientes ON clientes.id = id_cliente
-        WHERE emprestimo_ou_juros = 'E' ORDER BY `historico_imprestimo`.id DESC LIMIT 10 OFFSET " . $_SESSION['indexLimitCliente'] . ";";
+        ORDER BY `historico_imprestimo`.id DESC LIMIT 10 OFFSET " . $_SESSION['indexLimitCliente'] . ";";
 
         $retornoBanco = mysqli_query($link, $query);
 
@@ -195,7 +195,7 @@ function preencherComboNome() {
             }
             
             function salvar(){
-                if (valor != 'SELECIONE') {
+                if (document.getElementById("comboCodigoCliente").value != "SELECIONE") {
                     var idCliente = document.getElementById("comboCodigoCliente").value;
                     var valor = ((document.getElementById('valor').value === '') ? '0' : document.getElementById('valor').value);
                     var acrecimo = ((document.getElementById('acrecimo').value === '') ? '0' : document.getElementById('acrecimo').value); 
@@ -203,7 +203,7 @@ function preencherComboNome() {
                     var vfinal = ((document.getElementById('vfinal').value === '') ? '0' : document.getElementById('vfinal').value);
                     var saldo = ((document.getElementById('saldo').value === '') ? '0' : document.getElementById('saldo').value);
 
-                    if(parseFloat(retirarSifao(vfinal)) > 0){
+                    if(parseFloat(valor) > 0){
                         if(tipo == 'E'){
                             $.post("salvar_emprestimo_juros.php", "idCliente=" + idCliente + "&valor=" + valor+ "&acrecimo=" + acrecimo+ "&porcento=" + porcento+ "&vfinal=" + retirarSifao(vfinal) + "&saldo=" + retirarSifao(saldo) + "&tipo=" + tipo, function (data) {
                                 location.reload();
@@ -339,7 +339,7 @@ function preencherComboNome() {
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form>
+                            <form autocomplete="off">
                                 <div class="form-group form-row">
                                     <div class="form-group col-md-2">
                                        <label for="saldo" class="col-form-label">ID</label>
@@ -382,7 +382,7 @@ function preencherComboNome() {
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button onclick="salvar('E')" type="button" class="btn btn-primary">Salvar</button>
+                            <button onclick="salvar()" type="button" class="btn btn-primary">Salvar</button>
                         </div>
                     </div>
                 </div>

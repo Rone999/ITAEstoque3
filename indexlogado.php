@@ -1,10 +1,11 @@
 <?php
 session_start();
+require_once 'conecxao.php';
 
 if (!isset($_SESSION['id'])) {
     header("Location: index.php");
 }
-require_once 'Conecxao.php';
+require_once 'conecxao.php';
 //$_SESSION['indexLimitCliente'] = 0;
 if (!isset($_SESSION['indexLimitCliente'])) {
     $_SESSION['indexLimitCliente'] = 0;
@@ -215,14 +216,11 @@ function preencherTabelaClientes() {
                         <div class="col-2">
                             <a href="cadastrarcliente.php"><button type="button" class="btn btn-primary btn-sm btn-block">Cadastrar</button></a>
                                 <div class="dropdown-divider"></div>
-                                <button type="button" class="btn btn-primary btn-sm btn-block">Historico de Emprestimo</button>
-                                <button type="button" class="btn btn-primary btn-sm btn-block">Emprestimo</button>
+                                <a href="historico_Emprestimos.php"><button type="button" class="btn btn-primary btn-sm btn-block">Historico de Emprestimo</button></a>
                                 <div class="dropdown-divider"></div>
-                                <button type="button" class="btn btn-primary btn-sm btn-block">Historico pagamento</button>
-                                <button type="button" class="btn btn-primary btn-sm btn-block">Pagamentos</button>
+                                <a href="historico_pagamentos.php"><button type="button" class="btn btn-primary btn-sm btn-block">Historico pagamento</button></a>
                                 <div class="dropdown-divider"></div>
                                 <button type="button" class="btn btn-primary btn-sm btn-block">Historico meus pagamentos</button>
-                                <button type="button" class="btn btn-success btn-sm btn-block">Pagar</button>
                         </div>
                     </div>
 

@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Conecxao.php';
+require_once 'conecxao.php';
 require_once 'Cliente.php';
 
 session_start();

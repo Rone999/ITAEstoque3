@@ -28,9 +28,9 @@
             $totalPesoLiquido += $pro->pesoL;
         }
         
-        $query = "INSERT INTO his_entrada_ou_saida (id_cliente,peso_total,tara_toral,peso_liquido_total,valor_total,acrescimo_desconto_saldo,emprestimo_pagamento,entrada_ou_saida,descricao) VALUES "
-                . "('$idCliente','$totalPeso','$totalTara','$totalPesoLiquido','$total','$acreSaldo','$emprestimo','".(($_GET['tipo'] == 'ENTRADA') ? 'E' : 'S')."','$descricao');";
-        
+        $query = "INSERT INTO his_entrada_ou_saida (id_cliente,peso_total,tara_toral,peso_liquido_total,valor_total,acrescimo_desconto_saldo,emprestimo_pagamento,entrada_ou_saida,descricao, data_entr_sai) VALUES "
+                . "('$idCliente','$totalPeso','$totalTara','$totalPesoLiquido','$total','$acreSaldo','$emprestimo','".(($_GET['tipo'] == 'ENTRADA') ? 'E' : 'S')."','$descricao','NOW()');";
+        ECHO $query;
         if(mysqli_query($link, $query)){
             $query = "UPDATE `clientes` SET `valor` = '$saldo' WHERE `clientes`.`id` = '$idCliente';";
             mysqli_query($link, $query);
@@ -41,6 +41,7 @@
             if($arrayBanco['id']){
                 $idUltimoHistoricoEntradaSaida = $arrayBanco['id'];
             }
+            
             foreach ( $produtos as $pro ){
                 $query = "INSERT INTO his_entr_ou_sai_prod (id_his_entrada_ou_saida,id_produto,peso,tara,peso_liquido,preco_por_quilo,valor_final) VALUES ('$idUltimoHistoricoEntradaSaida','$pro->codigo','$pro->peso','$pro->tara','$pro->pesoL','$pro->precoPQ','$pro->valor');" ;
                 mysqli_query($link,$query);
