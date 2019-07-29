@@ -48,13 +48,20 @@
                 if((($_GET['tipo'] == 'ENTRADA') ? 'E' : 'S') == 'E'){
                     $query = "UPDATE `produtos` SET `quantidade` =  `quantidade` + '$pro->pesoL' WHERE `produtos`.`id` = '$pro->codigo';" ;
                     mysqli_query($link,$query);
+                
+                    $valorAnterio = $saldo - $acreSaldo;
+                    
+                    $query = "INSERT INTO his_pagamentos (id_cliente,valor,data,direto_ou_via_entrada,valor_anterior,valor_posterior) "
+                    . "VALUES ('$idCliente','$acreSaldo',NOW(),'E','$valorAnterio','$saldo');";
+
+                    $retornoBanco = mysqli_query($link, $query);
                 }else{
                     $query = "UPDATE `produtos` SET `quantidade` =  `quantidade` - '$pro->pesoL' WHERE `produtos`.`id` = '$pro->codigo';" ;
                     mysqli_query($link,$query);
                 }
             }
             
-            //header("Location: listas_entrada_saida.php?tipo=" . $_GET['tipo']. "&resetar=S");
+            header("Location: listas_entrada_saida.php?tipo=" . $_GET['tipo']. "&resetar=S");
         }
     }
     

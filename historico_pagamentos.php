@@ -105,7 +105,7 @@ function preencherComboNome() {
                 var saldoSemSifrao = retirarSifao(saldo);
                     
                 if(campoValor != '0'){
-                    resultado = parseFloat(saldoSemSifrao) + parseFloat(campoValor); //parseFloat(campoValor) + parseFloat(campoValorAcrescimo);
+                    resultado = parseFloat(saldoSemSifrao) - parseFloat(campoValor); //parseFloat(campoValor) + parseFloat(campoValorAcrescimo);
                 }else{
                     resultado = parseFloat(saldoSemSifrao);
                 }

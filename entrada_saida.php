@@ -104,11 +104,11 @@ function preencherComboNomeProduto() {
             });*/
 
             $(document).ready(function () {
-                $('input').keypress(function (e) {
+                /*$('input').keypress(function (e) {
                     var code = null;
                     code = (e.keyCode ? e.keyCode : e.which);
                     return (code == 13) ? false : true;
-                });
+                });*/
                 
                 if(tipo == 'SAIDA'){
                     $('#acreSaldo').hide();
@@ -453,6 +453,35 @@ function preencherComboNomeProduto() {
                 return valor.replace("R$", "").replace(".", "").replace(",", ".");
             }
             
+            function getCodigoKey(evt) {
+                var theEvent = evt || window.event;
+                var key = theEvent.keyCode || theEvent.which;
+                return key;
+            }
+
+            function alternarCampo(idCampom, keyCode){
+                if(parseInt(keyCode) == 13){
+                    if(idCampom == 'comboCodigoProduto'){
+                       document.getElementById('comboNomeProduto').focus();
+                    }
+                    
+                    if(idCampom == 'comboNomeProduto'){
+                       document.getElementById('peso').focus();
+                    }
+                    
+                    if(idCampom == 'peso'){
+                       document.getElementById('tara').focus();
+                    }
+                    
+                    if(idCampom == 'tara'){
+                       document.getElementById('preçoquilo').focus();
+                    } 
+                    
+                    if(idCampom == 'preçoquilo'){
+                       finalizarProduto();
+                    } 
+                }
+            }
             
         </script>  
     </head>
@@ -463,8 +492,7 @@ function preencherComboNomeProduto() {
             </a>
         </nav>
         <br><br><br>
-        <form autocomplete="off">
-            <div class="col-12">
+        <div class="col-12">
                 <h3><?php echo $tipo ?></h3>
                 <div class="form-row">
                     <div class="form-group col-2">
@@ -487,25 +515,25 @@ function preencherComboNomeProduto() {
                 <div class="form-row">
                     <div class="form-group col-1">
                         <label for="comboCodigoProduto">Cod.produto</label>
-                        <select onchange="igualar('codigoProduto')" id="comboCodigoProduto"  class="form-control" name="codigoProtuto">
+                        <select onkeydown="alternarCampo('comboCodigoProduto' , getCodigoKey());" onchange="igualar('codigoProduto')" id="comboCodigoProduto"  class="form-control" name="codigoProtuto">
                             <option value="SELECIONE">SELECIONE</option>
                                 <?php preencherComboIdProduto(); ?>       
                         </select>  
                     </div>
                     <div class="form-group col-3">
                         <label for="comboNomeProduto">Nome Produto</label>
-                        <select autofocus="" onchange="igualar('nomeProduto')" id="comboNomeProduto"  class="form-control" name="nomeProduto">
+                        <select onkeydown="alternarCampo('comboNomeProduto' , getCodigoKey());" autofocus="" onchange="igualar('nomeProduto')" id="comboNomeProduto"  class="form-control" name="nomeProduto">
                             <option value="SELECIONE">SELECIONE</option>
                                 <?php preencherComboNomeProduto(); ?>       
                         </select>  
                     </div>
                     <div class="form-group col-1">
                         <label for="peso">Peso</label>
-                        <input onkeypress="return caracteresNumPontos()" onkeydown="somarPeso()" onkeyup="somarPeso()"  type="text" class="form-control" id="peso" placeholder="Peso">
+                        <input onkeypress="return caracteresNumPontos()" onkeydown="alternarCampo('peso' , getCodigoKey()); somarPeso();" onkeyup="somarPeso()"  type="text" class="form-control" id="peso" placeholder="Peso">
                     </div>
                     <div class="form-group col-1">
                         <label for="tara">Tara</label>
-                        <input id="tara" onkeypress="return caracteresNumPontos()" onkeydown="somarPeso()" onkeyup="somarPeso()" type="text" class="form-control"  placeholder="Tara">
+                        <input id="tara" onkeypress="return caracteresNumPontos()" onkeydown="alternarCampo('tara' , getCodigoKey()); somarPeso();"  onkeyup="somarPeso()" type="text" class="form-control"  placeholder="Tara">
                     </div>
                     <div class="form-group col-2">
                         <label for="pliquido">Peso liquido</label>
@@ -513,7 +541,7 @@ function preencherComboNomeProduto() {
                     </div>
                     <div class="form-group col-2">
                         <label for="preçoquilo">Preço p. quilo</label>
-                        <input onkeypress="finalizarProduto(); return caracteresNumPontos();" onkeydown="somarValor()" onkeyup="somarValor()" type="text" class="form-control" id="preçoquilo" placeholder="Preço quilo">
+                        <input onkeypress="return caracteresNumPontos();" onkeydown="alternarCampo('preçoquilo' , getCodigoKey()); somarPeso();" onkeyup="somarValor()" type="text" class="form-control" id="preçoquilo" placeholder="Preço quilo">
                     </div>
                     <div class="form-group col-1">
                         <label for="valorfinal">Valor final</label>
@@ -562,6 +590,5 @@ function preencherComboNomeProduto() {
                     <button onclick="enviarInformacoes()" type="button" class="btn btn-danger btn-sm btn-block">Finalizar</button>
                 </div>
             </div>
-        </form>
     </body>
 </html>
