@@ -203,19 +203,26 @@ function preencherComboNome() {
                     var vfinal = ((document.getElementById('vfinal').value === '') ? '0' : document.getElementById('vfinal').value);
                     var saldo = ((document.getElementById('saldo').value === '') ? '0' : document.getElementById('saldo').value);
 
-                    if(parseFloat(valor) > 0){
+                    
                         if(tipo == 'E'){
-                            $.post("salvar_emprestimo_juros.php", "idCliente=" + idCliente + "&valor=" + valor+ "&acrecimo=" + acrecimo+ "&porcento=" + porcento+ "&vfinal=" + retirarSifao(vfinal) + "&saldo=" + retirarSifao(saldo) + "&tipo=" + tipo, function (data) {
-                                location.reload();
-                            });
+                            if(parseFloat(valor) > 0){
+                                $.post("salvar_emprestimo_juros.php", "idCliente=" + idCliente + "&valor=" + valor+ "&acrecimo=" + acrecimo+ "&porcento=" + porcento+ "&vfinal=" + retirarSifao(vfinal) + "&saldo=" + retirarSifao(saldo) + "&tipo=" + tipo, function (data) {
+                                    location.reload();
+                                });
+                            }else{
+                                alert('ADICIONE VALORES');
+                            }
                         }else{
-                            $.post("salvar_emprestimo_juros.php", "idCliente=" + idCliente + "&valor=" + valor+ "&acrecimo=" + acrecimo+ "&porcento=" + porcento+ "&vfinal=" + sobraCalculo + "&saldo=" + retirarSifao(saldo) + "&tipo=" + tipo, function (data) {
-                                location.reload();
-                            });
+                            console.log(parseFloat(acrecimo) + "  " + parseFloat(porcento))
+                            if(parseFloat(acrecimo) > 0 || parseFloat(porcento) > 0){
+                                $.post("salvar_emprestimo_juros.php", "idCliente=" + idCliente + "&valor=" + valor+ "&acrecimo=" + acrecimo+ "&porcento=" + porcento+ "&vfinal=" + sobraCalculo + "&saldo=" + retirarSifao(saldo) + "&tipo=" + tipo, function (data) {
+                                    location.reload();
+                                });
+                            }else{
+                                alert('ADICIONE JUROS');
+                            }
                         }
-                    }else{
-                        alert('ADICIONE VALORES');
-                    }
+                    
 
                 }else{
                     alert('SELECIONE O CLIENTE');
