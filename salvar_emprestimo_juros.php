@@ -28,4 +28,8 @@
             $query = "UPDATE `clientes` SET `valor` = '$valorPost' WHERE `clientes`.`id` = '$idcliente';";
             mysqli_query($link, $query);
         }
+        
+        if (isset($_SESSION['id'])) {
+            $_SESSION['ultimaAba'] = 'cliente';
+        }
     }

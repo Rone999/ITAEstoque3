@@ -230,9 +230,10 @@ function preencherTabelaClientes() {
                                 <div class="dropdown-divider"></div>
                                 <a href="historico_Emprestimos.php"><button type="button" class="btn btn-primary btn-sm btn-block">Historico de Emprestimo</button></a>
                                 <div class="dropdown-divider"></div>
-                                <a href="historico_pagamentos.php"><button type="button" class="btn btn-primary btn-sm btn-block">Historico pagamento</button></a>
+                                <a href="historico_pagamentos.php?tipo=P"><button type="button" class="btn btn-primary btn-sm btn-block">Historico pagamento</button></a>
                                 <div class="dropdown-divider"></div>
-                                <button type="button" class="btn btn-primary btn-sm btn-block">Historico meus pagamentos</button>
+                                <a href="historico_pagamentos.php?tipo=M"><button type="button" class="btn btn-primary btn-sm btn-block">Historico meus pagamentos</button></a>
+                                <div class="dropdown-divider"></div>
                         </div>
                     </div>
 
@@ -299,28 +300,27 @@ function preencherTabelaClientes() {
                 </div>
                 <div class="modal-body">
                     <form method="post" action="cadastrar_produto.php">
-                    
-                    <input name="id" type="text" class="form-control" id="idProduto">
-                    <script>
-                        $('#idProduto').hide();
-                    </script>    
-                        
-                    <div class="form-group">
-                      <label for="nomeProduto" class="col-form-label">Nome</label>
-                      <input name="nome" type="text" class="form-control" id="nomeProduto">
-                    </div>
-                    <div class="form-group">
-                      <label for="quantProduto" class="col-form-label">Quantidade no estoque</label>
-                      <input onkeypress="return caracteresNumPontos()" name="quantidade" type="text" class="form-control" id="quantProduto">
-                    </div>
-                    <div class="form-group">
-                      <label for="valorProduto" class="col-form-label">Valor de venda R$</label>
-                      <input onkeypress="return caracteresNumPontos()" name="valor_venda" type="text" class="form-control" id="valorProduto">
-                    </div>
-                      
-                    <div class="modal-footer">
-                        <button id="idButaoProduto" type="submit" class="btn btn-primary">Cadastrar</button>
-                    </div>
+                        <input name="id" type="text" class="form-control" id="idProduto">
+                        <script>
+                            $('#idProduto').hide();
+                        </script>    
+
+                        <div class="form-group">
+                          <label for="nomeProduto" class="col-form-label">Nome</label>
+                          <input name="nome" type="text" class="form-control" id="nomeProduto">
+                        </div>
+                        <div class="form-group">
+                          <label for="quantProduto" class="col-form-label">Quantidade no estoque</label>
+                          <input onkeypress="return caracteresNumPontos()" name="quantidade" type="text" class="form-control" id="quantProduto">
+                        </div>
+                        <div class="form-group">
+                          <label for="valorProduto" class="col-form-label">Valor de venda R$</label>
+                          <input onkeypress="return caracteresNumPontos()" name="valor_venda" type="text" class="form-control" id="valorProduto">
+                        </div>
+
+                        <div class="modal-footer">
+                            <button id="idButaoProduto" type="submit" class="btn btn-primary">Cadastrar</button>
+                        </div>
                   </form>
                 </div>
                 

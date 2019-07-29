@@ -1,20 +1,35 @@
 <?php
-     require_once 'conecxao.php';
+    $tipoG = $_GET['tipo'];
+
+    if($tipoG == "P"){
+        echo "<script type=\"text/javascript\">var tipo = 'P';</script>";
+    }else{
+        echo "<script type=\"text/javascript\">var tipo = 'M';</script>";
+    }
+
+    require_once 'conecxao.php';
     session_start();
 
-    function preencherTabela() {
+    function preencherTabela($tipoG) {
         $link = conecxao::conectar();
 
-        $query = "SELECT  id_cliente,clientes.nome_razao_social AS nome, clientes.valor AS saldo, `his_pagamentos`.valor, id_cliente,data,direto_ou_via_entrada,valor_anterior,valor_posterior FROM his_pagamentos
-        INNER JOIN clientes ON clientes.id = id_cliente
-        ORDER BY `his_pagamentos`.id DESC LIMIT 10 OFFSET " . $_SESSION['indexLimitCliente'] . ";";
+        if($tipoG == "P"){
+            $query = "SELECT  id_cliente,clientes.nome_razao_social AS nome, clientes.valor AS saldo, `his_pagamentos`.valor, id_cliente,data,direto_ou_via_entrada,valor_anterior,valor_posterior FROM his_pagamentos
+            INNER JOIN clientes ON clientes.id = id_cliente
+            ORDER BY `his_pagamentos`.id DESC LIMIT 10 OFFSET " . $_SESSION['indexLimitCliente'] . ";";
+        }else{
+            $query = "SELECT  id_cliente,clientes.nome_razao_social AS nome, clientes.valor AS saldo, `his_meus_pagamentos`.valor, id_cliente,data,valor_anterior,valor_posterior FROM his_meus_pagamentos
+            INNER JOIN clientes ON clientes.id = id_cliente
+            ORDER BY `his_meus_pagamentos`.id DESC LIMIT 10 OFFSET " . $_SESSION['indexLimitCliente'] . ";";
+        }
 
+       // echo $query;
         $retornoBanco = mysqli_query($link, $query);
 
         while ($linha = mysqli_fetch_array($retornoBanco, MYSQLI_ASSOC)) {
             $id_cliente = $linha['id_cliente'];
             $nome =  $linha['nome']; 
-            $tipo =  $linha['direto_ou_via_entrada']; 
+            $tipo =  ($tipoG == "P") ? $linha['direto_ou_via_entrada'] : ""; 
             $valor = 'R$' . number_format($linha['valor'], 2);
             $data = date('d/m/Y',  strtotime($linha['data']));
             $valor_anterior = 'R$' . number_format($linha['valor_anterior'], 2);
@@ -23,10 +38,12 @@
 
             $tipo = ($tipo == 'D') ? "DIRETO" : "ENTRADA";
             
+            $linhaDoTipo = ($tipoG == "P") ? "<td>$tipo</td>" : "";
+            
             echo "<tr>
                     <th scope=\"row\">$id_cliente</th>
                     <td>$nome</td>
-                    <td>$tipo</td>
+                    $linhaDoTipo
                     <td>$valor</td>
                     <td>$valor_anterior</td>
                     <td>$valor_posterior</td>
@@ -87,8 +104,6 @@ function preencherComboNome() {
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
 
         <script type="text/javascript">
-            var tipo = 'D';
-            
             $('input').keypress(function (e) {
                 var code = null;
                 code = (e.keyCode ? e.keyCode : e.which);
@@ -105,7 +120,11 @@ function preencherComboNome() {
                 var saldoSemSifrao = retirarSifao(saldo);
                     
                 if(campoValor != '0'){
-                    resultado = parseFloat(saldoSemSifrao) - parseFloat(campoValor); //parseFloat(campoValor) + parseFloat(campoValorAcrescimo);
+                    if(tipo == "P"){
+                        resultado = parseFloat(saldoSemSifrao) - parseFloat(campoValor);
+                    }else{
+                        resultado = parseFloat(saldoSemSifrao) + parseFloat(campoValor);
+                    }
                 }else{
                     resultado = parseFloat(saldoSemSifrao);
                 }
@@ -164,7 +183,7 @@ function preencherComboNome() {
                     var saldo = ((document.getElementById('saldo').value === '') ? '0' : document.getElementById('saldo').value);
 
                     if(parseFloat(valor) > 0){
-                        $.post("salvar_pagamentos.php", "idCliente=" + idCliente + "&valor=" + valor + "&valor=" + valor + "&saldo=" + retirarSifao(saldo) + "&tipo=" + tipo + "&vfinal=" + retirarSifao(vfinal), function (data) {
+                        $.post("salvar_pagamentos.php", "idCliente=" + idCliente + "&valor=" + valor + "&saldo=" + retirarSifao(saldo) + "&tipo=" + tipo + "&vfinal=" + retirarSifao(vfinal), function (data) {
                             location.reload();
                         });
                     }else{
@@ -234,7 +253,7 @@ function preencherComboNome() {
             </a>
         </nav>
         <br><br><br>
-        <h2>Historico de pagamentos</h2>
+        <h2><?php echo ($tipoG == "P") ? "Historico de pagamentos" : "Historico meus pagamentos" ?></h2>
         <div class="row col-12">
             <div class="col-10">
                 <table class="table table-striped">
@@ -242,7 +261,7 @@ function preencherComboNome() {
                         <tr>
                             <th scope="col">Id</th>
                             <th scope="col">Nome/Razâo social</th>
-                            <th scope="col">Tipo</th>
+                            <?php echo ($tipoG == "P") ? '<th scope=\"col\">Tipo</th>' : '' ?>
                             <th scope="col">Valor</th>
                             <th scope="col">Valor anterio</th>
                             <th scope="col">Valor posterior</th>
@@ -250,7 +269,7 @@ function preencherComboNome() {
                         </tr>
                     </thead>
                     <tbody>
-                        <?php preencherTabela() ?>
+                        <?php preencherTabela($tipoG) ?>
                     </tbody>
                 </table>
             </div>

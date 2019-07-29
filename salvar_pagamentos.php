@@ -12,8 +12,13 @@
         
         $link = conecxao::conectar();
         
-        $query = "INSERT INTO his_pagamentos (id_cliente,valor,data,direto_ou_via_entrada,valor_anterior,valor_posterior) "
-                . "VALUES ('$idcliente','$valor',NOW(),'$tipo','$saldo','$valorFinal');";
+        if($tipo == "P"){
+            $query = "INSERT INTO his_pagamentos (id_cliente,valor,data,direto_ou_via_entrada,valor_anterior,valor_posterior) "
+                    . "VALUES ('$idcliente','$valor',NOW(),'D','$saldo','$valorFinal');";
+        }else{
+            $query = "INSERT INTO his_meus_pagamentos (id_cliente,valor,data,valor_anterior,valor_posterior) "
+                    . "VALUES ('$idcliente','$valor',NOW(),'$saldo','$valorFinal');";
+        }
 
         $retornoBanco = mysqli_query($link, $query);
 
@@ -22,5 +27,9 @@
         }else{
             $query = "UPDATE `clientes` SET `valor` = '$valorFinal' WHERE `clientes`.`id` = '$idcliente';";
             mysqli_query($link, $query);
+        }
+        
+        if (isset($_SESSION['id'])) {
+            $_SESSION['ultimaAba'] = 'cliente';
         }
     }
