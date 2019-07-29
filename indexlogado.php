@@ -115,14 +115,26 @@ function preencherTabelaClientes() {
  
             <script type="text/javascript">
                 jQuery(function ($) {
-                    $('#quantProduto').mask("#########0,00", {reverse: true});
-                    $('#valorProduto').mask("#########0,00", {reverse: true});
+                    /*$('#quantProduto').mask("#########0,00", {reverse: true});
+                    $('#valorProduto').mask("#########0,00", {reverse: true});*/
 
                     /*$('#cpfClienteI').mask('000.000.000-00');
 
                     $('#cpfCnpjV').mask('000.000.000-00');*/
 
                 });
+                
+                function caracteresNumPontos(evt) {
+                    var theEvent = evt || window.event;
+                    var key = theEvent.keyCode || theEvent.which;
+                    key = String.fromCharCode(key);
+                    var regex = /^[0-9,]+$/;
+                    if (!regex.test(key)) {
+                        theEvent.returnValue = false;
+                        if (theEvent.preventDefault)
+                            theEvent.preventDefault();
+                    }
+                }
                 
                 function setarDadosCliente(codigo,nome,quantidade,valor){
                     document.getElementById("idProduto").value = codigo;
@@ -294,16 +306,16 @@ function preencherTabelaClientes() {
                     </script>    
                         
                     <div class="form-group">
-                      <label for="recipient-name" class="col-form-label">Nome</label>
+                      <label for="nomeProduto" class="col-form-label">Nome</label>
                       <input name="nome" type="text" class="form-control" id="nomeProduto">
                     </div>
                     <div class="form-group">
-                      <label for="recipient-name" class="col-form-label">Quantidade no estoque</label>
-                      <input name="quantidade" type="text" class="form-control" id="quantProduto">
+                      <label for="quantProduto" class="col-form-label">Quantidade no estoque</label>
+                      <input onkeypress="return caracteresNumPontos()" name="quantidade" type="text" class="form-control" id="quantProduto">
                     </div>
                     <div class="form-group">
-                      <label for="recipient-name" class="col-form-label">Valor de venda R$</label>
-                      <input name="valor_venda" type="text" class="form-control" id="valorProduto">
+                      <label for="valorProduto" class="col-form-label">Valor de venda R$</label>
+                      <input onkeypress="return caracteresNumPontos()" name="valor_venda" type="text" class="form-control" id="valorProduto">
                     </div>
                       
                     <div class="modal-footer">

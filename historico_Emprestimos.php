@@ -121,6 +121,10 @@ function preencherComboNome() {
                 var resultado = 0;
                 var saldo = document.getElementById('saldo').value;
                 
+                campoValor = campoValor.replace(",",".");
+                campoValorAcrescimo = campoValorAcrescimo.replace(",",".");
+                campoPorcentagem = campoPorcentagem.replace(",",".");
+                
                 campoValorAcrescimo = (campoValorAcrescimo == '') ? '0' : campoValorAcrescimo;
                 
                 if(tipo == 'E'){
@@ -153,7 +157,7 @@ function preencherComboNome() {
                 var theEvent = evt || window.event;
                 var key = theEvent.keyCode || theEvent.which;
                 key = String.fromCharCode(key);
-                var regex = /^[0-9.]+$/;
+                var regex = /^[0-9,]+$/;
                 if (!regex.test(key)) {
                     theEvent.returnValue = false;
                     if (theEvent.preventDefault)
@@ -202,8 +206,10 @@ function preencherComboNome() {
                     var porcento = ((document.getElementById('porcento').value === '') ? '0' : document.getElementById('porcento').value);
                     var vfinal = ((document.getElementById('vfinal').value === '') ? '0' : document.getElementById('vfinal').value);
                     var saldo = ((document.getElementById('saldo').value === '') ? '0' : document.getElementById('saldo').value);
-
                     
+                    valor = valor.replace(",",".");
+                    acrecimo = acrecimo.replace(",",".");
+                    porcento = porcento.replace(",",".");
                         if(tipo == 'E'){
                             if(parseFloat(valor) > 0){
                                 $.post("salvar_emprestimo_juros.php", "idCliente=" + idCliente + "&valor=" + valor+ "&acrecimo=" + acrecimo+ "&porcento=" + porcento+ "&vfinal=" + retirarSifao(vfinal) + "&saldo=" + retirarSifao(saldo) + "&tipo=" + tipo, function (data) {
@@ -239,6 +245,8 @@ function preencherComboNome() {
             }
             
             function retirarSifao(valor) {
+                valor = valor.replace(",",".");
+                
                 return valor.replace("R$", "").replace(".", "").replace(",", ".");
             }
             
@@ -266,6 +274,7 @@ function preencherComboNome() {
             
             function obterSaldoCliente() {
                 var valor = document.getElementById('comboCodigoCliente').value;
+                
                 if (valor != 'SELECIONE') {
                     $.post("getSaldoCliente.php", "id=" + valor + "", function (data) {
                         var retornoJson = jQuery.parseJSON(data);

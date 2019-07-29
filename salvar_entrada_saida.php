@@ -29,8 +29,8 @@
         }
         
         $query = "INSERT INTO his_entrada_ou_saida (id_cliente,peso_total,tara_toral,peso_liquido_total,valor_total,acrescimo_desconto_saldo,emprestimo_pagamento,entrada_ou_saida,descricao, data_entr_sai) VALUES "
-                . "('$idCliente','$totalPeso','$totalTara','$totalPesoLiquido','$total','$acreSaldo','$emprestimo','".(($_GET['tipo'] == 'ENTRADA') ? 'E' : 'S')."','$descricao','NOW()');";
-        ECHO $query;
+                . "('$idCliente','$totalPeso','$totalTara','$totalPesoLiquido','$total','$acreSaldo','$emprestimo','".(($_GET['tipo'] == 'ENTRADA') ? 'E' : 'S')."','$descricao',NOW());";
+        
         if(mysqli_query($link, $query)){
             $query = "UPDATE `clientes` SET `valor` = '$saldo' WHERE `clientes`.`id` = '$idCliente';";
             mysqli_query($link, $query);
@@ -54,7 +54,7 @@
                 }
             }
             
-            header("Location: listas_entrada_saida.php?tipo=" . $_GET['tipo']. "&resetar=S");
+            //header("Location: listas_entrada_saida.php?tipo=" . $_GET['tipo']. "&resetar=S");
         }
     }
     

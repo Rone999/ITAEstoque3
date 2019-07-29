@@ -123,7 +123,7 @@ function preencherComboNomeProduto() {
                 var theEvent = evt || window.event;
                 var key = theEvent.keyCode || theEvent.which;
                 key = String.fromCharCode(key);
-                var regex = /^[0-9.]+$/;
+                var regex = /^[0-9,]+$/;
                 if (!regex.test(key)) {
                     theEvent.returnValue = false;
                     if (theEvent.preventDefault)
@@ -164,9 +164,9 @@ function preencherComboNomeProduto() {
                     celula7.innerHTML = valor.value;
                     celula8.innerHTML = "<button class=\"btn btn-primary\" onclick='removeLinha(this)'>Excluir</button>";
 
-                    arrayProdutos[numeroLinhas] = '{"codigo":' + codigo.value + ',"nome":\"' + nome.value + '\","peso":' + peso.value + ',"tara":' + ((tara.value == '') ? '0' : tara.value) + ',"pesoL":' + pesoLiquido.value + ',"precoPQ":' + PrecoPQuilo.value + ',"valor":' + retirarSifao(valor.value) + '}';
-                    arrayTotais[numeroLinhas] = retirarSifao(valor.value);
-                    arrayTotaisP[numeroLinhas] = pesoLiquido.value;
+                    arrayProdutos[numeroLinhas] = '{"codigo":' + codigo.value + ',"nome":\"' + nome.value + '\","peso":' + peso.value.replace(",",".") + ',"tara":' + ((tara.value == '') ? '0' : tara.value.replace(",",".")) + ',"pesoL":' + pesoLiquido.value.replace(",",".") + ',"precoPQ":' + PrecoPQuilo.value.replace(",",".") + ',"valor":' + retirarSifao(valor.value).replace(",",".") + '}';
+                    arrayTotais[numeroLinhas] = retirarSifao(valor.value).replace(",",".");
+                    arrayTotaisP[numeroLinhas] = pesoLiquido.value.replace(",",".");
                     somarTotalP();
                     limparCampos();
                     somarTotal();
@@ -244,16 +244,19 @@ function preencherComboNomeProduto() {
 
 
             function somarPeso() {
-                var peso = document.getElementById('peso');
-                var tara = document.getElementById('tara');
+                var peso = document.getElementById('peso').value;
+                var tara = document.getElementById('tara').value;
 
-                if (peso.value.length !== 0) {
+                peso = peso.replace(",",".");
+                tara = tara.replace(",",".");
+                
+                if (peso.length !== 0) {
                     var soma = 0;
 
-                    if (tara.value.length !== 0) {
-                        soma = (parseFloat(peso.value) - parseFloat(tara.value));
+                    if (tara.length !== 0) {
+                        soma = (parseFloat(peso) - parseFloat(tara));
                     } else {
-                        soma = peso.value;
+                        soma = peso;
                     }
 
                     var pesoL = document.getElementById('pliquido');
@@ -264,13 +267,16 @@ function preencherComboNomeProduto() {
             }
 
             function somarValor() {
-                var pesoL = document.getElementById('pliquido');
-                var precoQuilo = document.getElementById('preçoquilo');
+                var pesoL = document.getElementById('pliquido').value;
+                var precoQuilo = document.getElementById('preçoquilo').value;
+                pesoL = pesoL.replace(",",".");
+                precoQuilo = precoQuilo.replace(",",".");
+                
 
-                if (pesoL.value.length !== 0) {
+                if (pesoL.length !== 0) {
                     var soma = 0;
 
-                    soma = (parseFloat(pesoL.value) * parseFloat(precoQuilo.value));
+                    soma = (parseFloat(pesoL) * parseFloat(precoQuilo));
 
                     var valorFinal = document.getElementById('valorfinal');
                     if (!isNaN(soma)) {
@@ -344,6 +350,9 @@ function preencherComboNomeProduto() {
                         var idcliente = ((document.getElementById('comboCodigoCliente').value === '') ? '0' : document.getElementById('comboCodigoCliente').value);
                         var saldo = parseFloat(retirarSifao(document.getElementById('saldo').value));
 
+                        emprest = emprest.replace(",",".");
+                        acreSaldo = acreSaldo.replace(",",".");
+                        
                         if (parseFloat(acreSaldo) <= totalProdutos || acreSaldo == '') {
                             window.location.href = "salvar_entrada_saida.php?json=" + json + "&idCliente=" + idcliente + "&descri=" + document.getElementById('descricao').value + "&total=" + totalProdutos + "&saldo=" + saldo + "&acreSaldo=" + acreSaldo + "&emprestimo=" + emprest + "&tipo=" + tipo;
                         } else {
@@ -372,6 +381,7 @@ function preencherComboNomeProduto() {
 
             function obterSaldoCliente() {
                 var valor = document.getElementById('comboCodigoCliente').value;
+                valor = valor.replace(",",".");
                 if (valor != 'SELECIONE') {
                     $.post("getSaldoCliente.php", "id=" + valor + "", function (data) {
                         var retornoJson = jQuery.parseJSON(data);
@@ -389,20 +399,23 @@ function preencherComboNomeProduto() {
             }
 
             function calcularSaldo() {
-                var acresSaldo = document.getElementById('acreSaldo');
-                var emprestimo = document.getElementById('emprestimo');
+                var acresSaldo = document.getElementById('acreSaldo').value;
+                var emprestimo = document.getElementById('emprestimo').value;
+
+                acresSaldo = acresSaldo.replace(",",".");
+                emprestimo = emprestimo.replace(",",".");
 
                 if (saldoCliente.length !== 0) {
                     var soma = 0;
 
-                    if (acresSaldo.value.length !== 0) {
-                        soma = (parseFloat(saldoCliente) + parseFloat(acresSaldo.value));
+                    if (acresSaldo.length !== 0) {
+                        soma = (parseFloat(saldoCliente) + parseFloat(acresSaldo));
                     } else {
                         soma = saldoCliente;
                     }
 
-                    if (emprestimo.value.length !== 0) {
-                        soma = (parseFloat(soma) - parseFloat(emprestimo.value))
+                    if (emprestimo.length !== 0) {
+                        soma = (parseFloat(soma) - parseFloat(emprestimo))
                     }
 
                     var pesoL = document.getElementById('saldo');
@@ -411,13 +424,13 @@ function preencherComboNomeProduto() {
             }
             
             function calcularSaldoSaida() {
-                var total = document.getElementById('total');
+                var total = document.getElementById('total').value;
                
                 if (saldoCliente.length !== 0) {
                     var subtracao = 0;
 
-                    if (total.value.length !== 0) {
-                        subtracao = (parseFloat(saldoCliente) - parseFloat(retirarSifao(total.value)));
+                    if (total.length !== 0) {
+                        subtracao = (parseFloat(saldoCliente) - parseFloat(retirarSifao(total)));
                     } else {
                         subtracao = saldoCliente;
                     }

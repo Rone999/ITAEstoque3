@@ -18,7 +18,7 @@
         
         $valorPost = (floatval($saldo) - floatval($valorFinal));
         $query = "INSERT INTO historico_imprestimo (id_cliente,valor,acrecimo_porcentagem,acrecimo_valor,data,emprestimo_ou_juros,valor_anterior,valor_posterior) "
-                . "VALUES ('$idcliente','$valorFinal','$porceEmpre','$acrescimoEmpre',NOW(),'$tipo','$saldo','$valorPost');";
+                . "VALUES ('$idcliente','$valorEmprestimo','$porceEmpre','$acrescimoEmpre',NOW(),'$tipo','$saldo','$valorPost');";
 
         $retornoBanco = mysqli_query($link, $query);
 

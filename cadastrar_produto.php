@@ -9,8 +9,8 @@ session_start();
 if (isset($_SESSION['id'])) {
     $id = $_POST['id'];
     $nome = $_POST['nome'];
-    $quantidade = $_POST['quantidade'];
-    $valor_venda = $_POST['valor_venda'];
+    $quantidade = str_replace(",",".",$_POST['quantidade']);
+    $valor_venda = str_replace(",",".",$_POST['valor_venda']);
     
     $link = conecxao::conectar();
     
